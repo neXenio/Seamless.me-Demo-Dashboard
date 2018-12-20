@@ -1,8 +1,10 @@
-import React, { Fragment } from 'react';
-import { render } from 'react-dom';
-import { createGlobalStyle } from 'styled-components'
+import React from "react";
+import { render } from "react-dom";
+import { createGlobalStyle } from "styled-components";
+import { Provider } from "react-redux";
 
-import App from './js/App';
+import store from "./store.js";
+import App from "./js/App";
 
 const GlobalAppStyle = createGlobalStyle`
   html, body, #root {
@@ -28,9 +30,9 @@ const GlobalAppStyle = createGlobalStyle`
 `;
 
 render(
-  <Fragment>
+  <Provider store={store}>
     <GlobalAppStyle />
     <App />
-  </Fragment>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
