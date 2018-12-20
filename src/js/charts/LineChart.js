@@ -1,23 +1,22 @@
 // @flow
 
 import React, { Component } from "react";
-import { LineChart, Area, XAxis, YAxis, Tooltip } from "recharts";
-import styled from "styled-components";
+import {
+  LineChart as LineRechart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip
+} from "recharts";
+import moment from "moment";
 
-import { getCurrentScreenSize } from "../helpers";
+import { ChartWrapper } from "./ChartWrapper";
 
-const determineChartWidth = size => {
-  const { width } = getCurrentScreenSize();
-  const contentWidth = width - 2 * 20; // content padding
-
-  return {
-    full: contentWidth,
-    half: contentWidth / 2,
-    third: contentWidth / 3
-  }[size];
-};
+import { determineChartWidth } from "../helpers";
 
 const chartColors = ["#2196f3", "#6ec6ff", "#0069c0", "#29434e"];
+
+const tickFormatter = tick => moment(tick).format("HH:mm:ss");
 
 type PropsType = {
   data: Object[],
@@ -28,10 +27,11 @@ type PropsType = {
 };
 
 type StateType = {
-  width: number
+  width: number,
+  dataLabel: string
 };
 
-export class AreaChart extends Component<PropsType, StateType> {
+export class LineChart extends Component<PropsType, StateType> {
   constructor(props) {
     super(props);
 
@@ -41,45 +41,43 @@ export class AreaChart extends Component<PropsType, StateType> {
   }
 
   render() {
-    const { data, dataKeys, xAxisKey = "date", height = 400 } = this.props;
+    const {
+      data,
+      dataLabel,
+      dataKeys,
+      xAxisKey = "date",
+      height = 400
+    } = this.props;
 
     return (
-      <LineChart width={this.state.width} height={height} data={data}>
-        <defs>
-          {dataKeys.map((key, i) => (
-            <linearGradient key={key} id={key} x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor={chartColors[i % 4]}
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor={chartColors[i % 4]}
-                stopOpacity={0}
-              />
-            </linearGradient>
-          ))}
-        </defs>
-        <XAxis
-          scale="time"
-          type="number"
-          axisLine={false}
-          dataKey={xAxisKey}
-          tick={{ fill: "#29434e" }}
-        />
-        <YAxis tick={{ fill: "#29434e" }} />
-        <Tooltip animationDuration={500} />
-        {dataKeys.map((key, i) => (
-          <Area
-            type="monotone"
-            dataKey={key}
-            stroke={chartColors[i % 4]}
-            fillOpacity={1}
-            fill={`url(#${key})`}
+      <ChartWrapper width={this.state.width} dataLabel={dataLabel}>
+        <LineRechart width={this.state.width - 60} height={height} data={data}>
+          <XAxis
+            hide={true}
+            domain={["auto", "auto"]}
+            type="number"
+            scale="time"
+            axisLine={false}
+            dataKey={xAxisKey}
+            tick={{ fill: "#29434e" }}
+            tickFormatter={tickFormatter}
           />
-        ))}
-      </LineChart>
+          <YAxis tick={{ fill: "#29434e" }} />
+          <Tooltip animationDuration={500} />
+          {dataKeys.map((key, i) => (
+            <Line
+              legendType="square"
+              animationDuration={900}
+              animationEasing="linear"
+              label="line"
+              key={key}
+              type="monotone"
+              dataKey={key}
+              stroke={chartColors[i % 4]}
+            />
+          ))}
+        </LineRechart>
+      </ChartWrapper>
     );
   }
 }

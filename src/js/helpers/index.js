@@ -1,1 +1,1 @@
-export { getCurrentScreenSize } from "./screenSize";
+export { getCurrentScreenSize, determineChartWidth } from "./screenSize";
