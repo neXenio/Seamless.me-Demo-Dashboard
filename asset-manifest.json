@@ -1,14 +1,12 @@
 {
-  "main.css": "/BAuth-Demo-Dashboard/static/css/main.8be90014.chunk.css",
-  "main.js": "/BAuth-Demo-Dashboard/static/js/main.e8fdfdb9.chunk.js",
-  "main.js.map": "/BAuth-Demo-Dashboard/static/js/main.e8fdfdb9.chunk.js.map",
-  "static/js/1.fa92c112.chunk.js": "/BAuth-Demo-Dashboard/static/js/1.fa92c112.chunk.js",
-  "static/js/1.fa92c112.chunk.js.map": "/BAuth-Demo-Dashboard/static/js/1.fa92c112.chunk.js.map",
+  "main.js": "/BAuth-Demo-Dashboard/static/js/main.904bbb82.chunk.js",
+  "main.js.map": "/BAuth-Demo-Dashboard/static/js/main.904bbb82.chunk.js.map",
+  "static/js/1.13d386b8.chunk.js": "/BAuth-Demo-Dashboard/static/js/1.13d386b8.chunk.js",
+  "static/js/1.13d386b8.chunk.js.map": "/BAuth-Demo-Dashboard/static/js/1.13d386b8.chunk.js.map",
   "runtime~main.js": "/BAuth-Demo-Dashboard/static/js/runtime~main.1f3ceb54.js",
   "runtime~main.js.map": "/BAuth-Demo-Dashboard/static/js/runtime~main.1f3ceb54.js.map",
-  "static/media/logo.svg": "/BAuth-Demo-Dashboard/static/media/logo.5d5d9eef.svg",
-  "static/css/main.8be90014.chunk.css.map": "/BAuth-Demo-Dashboard/static/css/main.8be90014.chunk.css.map",
+  "static/media/bauth_logo.png": "/BAuth-Demo-Dashboard/static/media/bauth_logo.9fe5ffff.png",
   "index.html": "/BAuth-Demo-Dashboard/index.html",
-  "precache-manifest.375912129a76fe6b69c76f9f06308fe8.js": "/BAuth-Demo-Dashboard/precache-manifest.375912129a76fe6b69c76f9f06308fe8.js",
+  "precache-manifest.fabeb9ffdf1fa54d9ce6bfaee1e56bc8.js": "/BAuth-Demo-Dashboard/precache-manifest.fabeb9ffdf1fa54d9ce6bfaee1e56bc8.js",
   "service-worker.js": "/BAuth-Demo-Dashboard/service-worker.js"
 }
