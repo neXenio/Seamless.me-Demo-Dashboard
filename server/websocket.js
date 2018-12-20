@@ -18,7 +18,18 @@ const init = io => {
     socket.on("message", message => {
       console.log("received", Date.now(), message);
 
-      socket.to(ROOM).emit("message", message);
+      const key = message.key;
+
+      switch (key) {
+        case "device_info":
+          socket.to(ROOM).emit("addDevice", message);
+          break;
+        case "data_recording":
+          socket.to(ROOM).emit("addRecordings", message);
+          break;
+        default:
+          console.error("unknow message", message);
+      }
     });
   });
 };

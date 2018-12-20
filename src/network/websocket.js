@@ -16,10 +16,13 @@ export default class Websocket {
 
   setupSocket = () => {
     this.socket.emit("initDashboard");
-    this.socket.on("message", data => {
+    this.socket.on("addRecordings", data => {
       const json = JSON.parse(data);
       this.dispatch(
-        addRecordings(json.deviceInfo.id || "testId", json.recordings)
+        addRecordings(
+          (json.deviceInfo && json.deviceInfo.id) || "testId",
+          json.recordings
+        )
       );
     });
     this.socket.on("addDevice", data => {
