@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Websocket from "../network/websocket.js";
 import { AreaChart } from "./charts";
-import logo from '../bauth_logo.png';
+import logo from "../bauth_logo.png";
 
 const StyledRoot = styled.div`
   text-align: center;
@@ -50,9 +50,9 @@ const StyledContent = styled.section`
   justify-content: space-between;
 `;
 
-const data = [{date: Date.now(), uv: 4000, pv: 2400, amt: 2400}];
+const data = [{ date: Date.now(), uv: 4000, pv: 2400, amt: 2400 }];
 
-const getRandomData = (data) => {
+const getRandomData = data => {
   return [
     ...data,
     {
@@ -62,15 +62,18 @@ const getRandomData = (data) => {
       amt: Math.floor(Math.random() * 3000)
     }
   ].slice(-8);
-}
+};
 
 class App extends Component {
   constructor(props) {
     super(props);
-    new Websocket();
+    new Websocket(props.dispatch);
 
     this.state = { data };
-    this.interval = setInterval(() => this.setState({ data: getRandomData(this.state.data)}), 2000);
+    this.interval = setInterval(
+      () => this.setState({ data: getRandomData(this.state.data) }),
+      2000
+    );
   }
 
   render() {
@@ -81,7 +84,12 @@ class App extends Component {
           <StyledHeadline>BAuth Dashboard</StyledHeadline>
         </StyledHeader>
         <StyledContent>
-         <AreaChart data={this.state.data} xAxisKey="name" dataKeys={["uv", "pv", "amt"]} size="full" />
+          <AreaChart
+            data={this.state.data}
+            xAxisKey="name"
+            dataKeys={["uv", "pv", "amt"]}
+            size="full"
+          />
         </StyledContent>
       </StyledRoot>
     );

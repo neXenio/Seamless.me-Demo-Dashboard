@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import data from "./data";
+import recordings from "./recordings";
 
 export default combineReducers({
-  data
+  recordings
 });
