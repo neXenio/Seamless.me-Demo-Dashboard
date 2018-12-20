@@ -1,0 +1,1 @@
+export { getCurrentScreenSize } from "./screenSize";
