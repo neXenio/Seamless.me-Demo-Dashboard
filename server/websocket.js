@@ -12,12 +12,13 @@ const init = io => {
 
     socket.on("initDevice", device => {
       console.log("init device", device);
+      socket.to(ROOM).emit("addDevice", device);
     });
 
-    socket.on("message", data => {
-      console.log("received", Date.now(), data);
+    socket.on("message", message => {
+      console.log("received", Date.now(), message);
 
-      socket.to(ROOM).emit("message", data);
+      socket.to(ROOM).emit("message", message);
     });
   });
 };
