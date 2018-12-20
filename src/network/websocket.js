@@ -1,6 +1,6 @@
 import io from "socket.io-client";
 
-import { addRecordings } from "../js/actions";
+import { addRecordings, addDevice } from "../js/actions";
 
 export default class Websocket {
   constructor(dispatch) {
@@ -18,10 +18,13 @@ export default class Websocket {
     this.socket.emit("initDashboard");
     this.socket.on("message", data => {
       const json = JSON.parse(data);
-      console.log("message received", Object.keys(json));
       this.dispatch(
         addRecordings(json.deviceInfo.id || "testId", json.recordings)
       );
+    });
+    this.socket.on("addDevice", data => {
+      const json = JSON.parse(data);
+      this.dispatch(addDevice(json.deviceInfo));
     });
   };
 }

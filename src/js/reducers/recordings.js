@@ -5,14 +5,18 @@ const addRecordings = (state, deviceId, newRecordings) => {
   recordings[deviceId] = recordings[deviceId] || {};
 
   newRecordings.forEach(newRecord => {
-    console.log("newRecord", newRecord);
     const dataId = newRecord.dataId;
-    let dataRecordings = recordings[deviceId][dataId] || [];
+    const dataRecordings = recordings[deviceId][dataId] || [];
 
-    dataRecordings = dataRecordings
-      .concat(newRecord.dataList)
-      .slice(Math.max(dataRecordings.length - MAX_RECORDINGS, 0));
-    recordings[deviceId][dataId] = dataRecordings;
+    let allRecordings = dataRecordings.concat(newRecord.dataList);
+
+    if (allRecordings.length > MAX_RECORDINGS) {
+      allRecordings = allRecordings.slice(
+        allRecordings.length - MAX_RECORDINGS
+      );
+    }
+
+    recordings[deviceId][dataId] = allRecordings;
   });
 
   return recordings;
