@@ -86,17 +86,11 @@ class App extends Component {
           <StyledHeadline>BAuth Dashboard</StyledHeadline>
         </StyledHeader>
         <StyledContent>
-          <LineChart
-            dataLabel="TestData"
-            data={this.state.data}
-            dataKeys={["uv", "pv", "amt"]}
-            size="half"
-          />
           <AreaChart
-            dataLabel="TestData"
-            data={this.state.data}
+            dataLabel={this.props.sensor}
+            data={this.props.data}
             dataKeys={["uv", "pv", "amt"]}
-            size="half"
+            size="full"
           />
         </StyledContent>
       </StyledRoot>
