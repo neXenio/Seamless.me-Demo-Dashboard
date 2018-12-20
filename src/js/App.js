@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import styled from "styled-components";
 
-import logo from '../bauth_logo.png';
+import logo from "../bauth_logo.png";
+import Websocket from "../network/websocket.js";
 
 const StyledRoot = styled.div`
   text-align: center;
@@ -41,6 +42,10 @@ const StyledHeadline = styled.p`
 `;
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    new Websocket();
+  }
   render() {
     return (
       <StyledRoot>

@@ -1,4 +1,4 @@
-const MESSAGE_TYPES = ["test"];
+const MESSAGE_TYPES = ["test", "message"];
 
 const init = io => {
   io.on("connection", socket => {
