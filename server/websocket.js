@@ -1,14 +1,23 @@
-const MESSAGE_TYPES = ["test", "message"];
+const ROOM = "default_room";
 
 const init = io => {
   io.on("connection", socket => {
+    console.info("connected");
     socket.on("disconnect", () => console.log("Client disconnected"));
 
-    MESSAGE_TYPES.forEach(messageType => {
-      socket.on(messageType, data => {
-        console.log("received message", messageType, data);
-        socket.emit(messageType, data);
-      });
+    socket.on("initDashboard", () => {
+      console.log("initDashboard");
+      socket.join(ROOM);
+    });
+
+    socket.on("initDevice", device => {
+      console.log("init device", device);
+    });
+
+    socket.on("message", data => {
+      console.log("received", Date.now(), data);
+
+      socket.to(ROOM).emit("message", data);
     });
   });
 };
