@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import { render } from 'react-dom';
-import { createGlobalStyle } from 'styled-components'
+import React, { Fragment } from "react";
+import { render } from "react-dom";
+import { createGlobalStyle } from "styled-components";
 
-import App from './js/App';
+import App from "./js/App";
 
 const GlobalAppStyle = createGlobalStyle`
   html, body, #root {
@@ -32,5 +32,5 @@ render(
     <GlobalAppStyle />
     <App />
   </Fragment>,
-  document.getElementById('root')
+  document.getElementById("root")
 );

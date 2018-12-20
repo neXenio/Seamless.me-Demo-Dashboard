@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import Websocket from "../network/websocket.js";
-import { AreaChart } from "./charts";
-import logo from '../bauth_logo.png';
+import { AreaChart, LineChart } from "./charts";
+import logo from "../bauth_logo.png";
 
 const StyledRoot = styled.div`
   text-align: center;
   background-color: #546e7a;
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 `;
 
 const StyledHeader = styled.header`
@@ -48,11 +49,12 @@ const StyledContent = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
 `;
 
-const data = [{date: Date.now(), uv: 4000, pv: 2400, amt: 2400}];
+const data = [{ date: Date.now(), uv: 4000, pv: 2400, amt: 2400 }];
 
-const getRandomData = (data) => {
+const getRandomData = data => {
   return [
     ...data,
     {
@@ -61,8 +63,8 @@ const getRandomData = (data) => {
       pv: Math.floor(Math.random() * 10000),
       amt: Math.floor(Math.random() * 3000)
     }
-  ].slice(-8);
-}
+  ].slice(-15);
+};
 
 class App extends Component {
   constructor(props) {
@@ -70,7 +72,10 @@ class App extends Component {
     new Websocket();
 
     this.state = { data };
-    this.interval = setInterval(() => this.setState({ data: getRandomData(this.state.data)}), 2000);
+    this.interval = setInterval(
+      () => this.setState({ data: getRandomData(this.state.data) }),
+      1000
+    );
   }
 
   render() {
@@ -81,7 +86,18 @@ class App extends Component {
           <StyledHeadline>BAuth Dashboard</StyledHeadline>
         </StyledHeader>
         <StyledContent>
-         <AreaChart data={this.state.data} xAxisKey="name" dataKeys={["uv", "pv", "amt"]} size="full" />
+          <LineChart
+            dataLabel="TestData"
+            data={this.state.data}
+            dataKeys={["uv", "pv", "amt"]}
+            size="half"
+          />
+          <AreaChart
+            dataLabel="TestData"
+            data={this.state.data}
+            dataKeys={["uv", "pv", "amt"]}
+            size="half"
+          />
         </StyledContent>
       </StyledRoot>
     );
