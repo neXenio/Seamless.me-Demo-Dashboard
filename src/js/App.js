@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 import Websocket from "../network/websocket.js";
-<<<<<<< HEAD
-import { AreaChart } from "./charts";
-=======
 import { AreaChart, LineChart } from "./charts";
->>>>>>> master
 import logo from "../bauth_logo.png";
 
 const StyledRoot = styled.div`
