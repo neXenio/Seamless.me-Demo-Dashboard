@@ -2,6 +2,7 @@ const MESSAGE_TYPES = ["test", "message"];
 
 const init = io => {
   io.on("connection", socket => {
+    console.info("connected");
     socket.on("disconnect", () => console.log("Client disconnected"));
 
     MESSAGE_TYPES.forEach(messageType => {

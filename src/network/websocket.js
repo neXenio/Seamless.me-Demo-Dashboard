@@ -9,10 +9,15 @@ export default class Websocket {
     });
 
     this.setupSocket();
-    this.socket.emit("test", { data: 123, test: "hallo" });
+    this.sendTestMessage();
+    // setInterval(this.sendTestMessage, 5000);
   }
 
-  setupSocket() {
+  setupSocket = () => {
     this.socket.on("test", data => console.log("data received", data));
-  }
+    this.socket.on("message", data => console.log("message received", data));
+  };
+  sendTestMessage = () => {
+    this.socket.emit("test", { data: 123, test: "hallo" });
+  };
 }
