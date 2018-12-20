@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import logo from "../bauth_logo.png";
 import Websocket from "../network/websocket.js";
+import { AreaChart } from "./charts";
+import logo from '../bauth_logo.png';
 
 const StyledRoot = styled.div`
   text-align: center;
@@ -41,11 +42,37 @@ const StyledHeadline = styled.p`
   font-weight: 500;
 `;
 
+const StyledContent = styled.section`
+  min-height: calc(100% - 70px);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const data = [{date: Date.now(), uv: 4000, pv: 2400, amt: 2400}];
+
+const getRandomData = (data) => {
+  return [
+    ...data,
+    {
+      date: Date.now(),
+      uv: Math.floor(Math.random() * 4001),
+      pv: Math.floor(Math.random() * 10000),
+      amt: Math.floor(Math.random() * 3000)
+    }
+  ].slice(-8);
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     new Websocket();
+
+    this.state = { data };
+    this.interval = setInterval(() => this.setState({ data: getRandomData(this.state.data)}), 2000);
   }
+
   render() {
     return (
       <StyledRoot>
@@ -53,6 +80,9 @@ class App extends Component {
           <StyledLogo src={logo} alt="bauth_logo" />
           <StyledHeadline>BAuth Dashboard</StyledHeadline>
         </StyledHeader>
+        <StyledContent>
+         <AreaChart data={this.state.data} xAxisKey="name" dataKeys={["uv", "pv", "amt"]} size="full" />
+        </StyledContent>
       </StyledRoot>
     );
   }
