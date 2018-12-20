@@ -1,6 +1,6 @@
 // @flow
 
-import { compose, applyMiddleware, createStore } from "redux";
+import { compose, createStore } from "redux";
 
 import reducers from "./js/reducers";
 
