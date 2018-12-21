@@ -8,7 +8,6 @@ import { deselectFeature } from "./actions";
 const prepareData = (allRecordings, deviceId, sensor) => {
   if (!sensor || !deviceId) return {};
   const recordings = allRecordings[deviceId][sensor];
-  console.log("RECORDINGS", recordings);
 
   if (recordings[0].value) {
     return { recordings, dataKeys: ["0"] };
@@ -70,7 +69,6 @@ const mapStateToProps = state => {
   const deviceId = selection.device;
   const sensor = selection.feature;
   const { data, dataKeys } = prepareData(recordings, deviceId, sensor);
-  console.log("data, dataKeys", data, dataKeys);
 
   return {
     sensor,

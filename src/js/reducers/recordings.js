@@ -1,21 +1,31 @@
-const MAX_RECORDINGS = 200;
+const MAX_RECORDINGS = 1000;
+const MAX_DISPLAED_MILLIES = 30000;
 
 const addRecordings = (state, deviceId, newRecordings) => {
-  if (Math.random() > 0.9) deviceId = "newtestId";
+  deviceId = "BlackBerry Key One";
   const recordings = { ...state };
   recordings[deviceId] = recordings[deviceId] || {};
 
   newRecordings.forEach(newRecord => {
-    const dataId = newRecord.dataId.match(/[a-zA-Z]*$/);
+    const dataId = newRecord.dataId
+      .match(/[a-zA-Z]*$/)[0]
+      .split(/(?=[A-Z])/)
+      .join(" ")
+      .replace("Rx ", "");
     const dataRecordings = recordings[deviceId][dataId] || [];
 
-    let allRecordings = dataRecordings.concat(newRecord.dataList);
-
-    if (allRecordings.length > MAX_RECORDINGS) {
-      allRecordings = allRecordings.slice(
-        allRecordings.length - MAX_RECORDINGS
+    let allRecordings = dataRecordings
+      .concat(newRecord.dataList)
+      .filter(
+        record =>
+          record.aggregationTimestamp + MAX_DISPLAED_MILLIES > Date.now()
       );
-    }
+
+    // if (allRecordings.length > MAX_RECORDINGS) {
+    //   allRecordings = allRecordings.slice(
+    //     allRecordings.length - MAX_RECORDINGS
+    //   );
+    // }
 
     recordings[deviceId][dataId] = allRecordings;
   });

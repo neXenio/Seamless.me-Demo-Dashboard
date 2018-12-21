@@ -46,7 +46,7 @@ export class LineChart extends Component<PropsType, StateType> {
       dataLabel,
       dataKeys,
       xAxisKey = "date",
-      height = 400
+      height = 1000
     } = this.props;
     console.log("DATAKEYS", dataKeys);
 

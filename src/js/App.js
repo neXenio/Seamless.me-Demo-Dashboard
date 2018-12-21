@@ -89,13 +89,26 @@ class App extends Component {
     new Websocket(props.dispatch);
 
     this.state = { data };
-    this.interval = setInterval(
-      () => this.setState({ data: getRandomData(this.state.data) }),
-      1000
-    );
+    // this.interval = setInterval(this.updateData, 50);
+  }
+
+  updateData = () => {
+    const data = this.state.data;
+    if (!data || !data.length) return;
+    data[data.length - 1].aggregatedTimestamp = Date.now();
+    this.setState({
+      data
+    });
+  };
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      data: nextProps.data
+    });
   }
 
   render() {
+    console.log(this.props);
     return (
       <StyledRoot>
         <StyledHeader>
@@ -113,7 +126,7 @@ class App extends Component {
           <StyledContent>
             <LineChart
               dataLabel={this.props.sensor}
-              data={this.props.data}
+              data={this.state.data}
               dataKeys={this.props.dataKeys}
               xAxisKey="aggregatedTimestamp"
               size="full"
