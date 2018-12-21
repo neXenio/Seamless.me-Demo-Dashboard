@@ -22,8 +22,6 @@ const mapStateToProps = state => {
       }))
     : null;
 
-  console.log("devices, features", devices, features);
-
   return {
     devices,
     features

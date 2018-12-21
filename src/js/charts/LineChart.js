@@ -48,6 +48,7 @@ export class LineChart extends Component<PropsType, StateType> {
       xAxisKey = "date",
       height = 400
     } = this.props;
+    console.log("DATAKEYS", dataKeys);
 
     return (
       <ChartWrapper width={this.state.width} dataLabel={dataLabel}>
@@ -71,6 +72,8 @@ export class LineChart extends Component<PropsType, StateType> {
               animationEasing="linear"
               label="line"
               key={key}
+              dot={false}
+              isAnimationActive={false}
               type="monotone"
               dataKey={key}
               stroke={chartColors[i % 4]}

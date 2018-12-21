@@ -111,10 +111,10 @@ class App extends Component {
         </StyledHeader>
         {this.props.sensor ? (
           <StyledContent>
-            <AreaChart
+            <LineChart
               dataLabel={this.props.sensor}
               data={this.props.data}
-              dataKeys={["x", "y", "z"]}
+              dataKeys={this.props.dataKeys}
               xAxisKey="aggregatedTimestamp"
               size="full"
             />
