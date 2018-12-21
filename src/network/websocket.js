@@ -17,7 +17,7 @@ export default class Websocket {
   setupSocket = () => {
     this.socket.emit("initDashboard");
     this.socket.on("addRecordings", data => {
-      const json = JSON.parse(data);
+      const json = JSON.parse(data).data;
       this.dispatch(
         addRecordings(
           (json.deviceInfo && json.deviceInfo.id) || "testId",

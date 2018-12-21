@@ -87,13 +87,14 @@ export class AreaChart extends Component<PropsType, StateType> {
             </defs>
             <Legend iconType="line" wrapperStyle={{ color: "#819ca9" }} />
             <XAxis
-              hide={true}
+              hide={false}
               domain={["auto", "auto"]}
               type="number"
               scale="time"
               axisLine={false}
               dataKey={xAxisKey}
               tick={{ fill: "#29434e" }}
+              minTickGap={10000}
               tickFormatter={tickFormatter}
             />
             <YAxis axisLine={false} tick={{ fill: "#29434e" }} />
@@ -101,13 +102,11 @@ export class AreaChart extends Component<PropsType, StateType> {
             {dataKeys.map((key, i) => (
               <Area
                 key={key}
-                animationDuration={900}
+                animationDuration={0}
                 animationEasing="linear"
                 type="monotone"
                 dataKey={key}
                 stroke={chartColors[i % 4]}
-                fillOpacity={1}
-                fill={`url(#${key})`}
               />
             ))}
           </AreaRechart>

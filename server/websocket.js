@@ -16,11 +16,9 @@ const init = io => {
     });
 
     socket.on("message", message => {
-      console.log("received", Date.now(), message);
+      const parsedMessage = JSON.parse(message);
 
-      const key = message.key;
-
-      switch (key) {
+      switch (parsedMessage.key) {
         case "device_info":
           socket.to(ROOM).emit("addDevice", message);
           break;
@@ -28,7 +26,7 @@ const init = io => {
           socket.to(ROOM).emit("addRecordings", message);
           break;
         default:
-          console.error("unknow message", message);
+          console.error("unknow message", Object.keys(parsedMessage));
       }
     });
   });

@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Websocket from "../network/websocket.js";
 import { AreaChart, LineChart } from "./charts";
 import logo from "../bauth_logo.png";
+import backIcon from "../arrow-left.png";
+import Selection from "./selection/SelectionContainer";
 
 const StyledRoot = styled.div`
   text-align: center;
@@ -24,6 +26,21 @@ const StyledHeader = styled.header`
 `;
 
 const StyledLogo = styled.img`
+  position: absolute;
+  cursor: pointer
+  height: 50px;
+  width: 50px;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+`;
+
+const StyledReturnButton = styled.img`
   position: absolute;
   cursor: pointer
   height: 50px;
@@ -82,17 +99,29 @@ class App extends Component {
     return (
       <StyledRoot>
         <StyledHeader>
+          {this.props.sensor ? (
+            <StyledReturnButton
+              src={backIcon}
+              alt="back"
+              onClick={this.props.deselectFeature}
+            />
+          ) : null}
           <StyledLogo src={logo} alt="bauth_logo" />
           <StyledHeadline>BAuth Dashboard</StyledHeadline>
         </StyledHeader>
-        <StyledContent>
-          <AreaChart
-            dataLabel={this.props.sensor}
-            data={this.props.data}
-            dataKeys={["uv", "pv", "amt"]}
-            size="full"
-          />
-        </StyledContent>
+        {this.props.sensor ? (
+          <StyledContent>
+            <AreaChart
+              dataLabel={this.props.sensor}
+              data={this.props.data}
+              dataKeys={["x", "y", "z"]}
+              xAxisKey="aggregatedTimestamp"
+              size="full"
+            />
+          </StyledContent>
+        ) : (
+          <Selection />
+        )}
       </StyledRoot>
     );
   }
