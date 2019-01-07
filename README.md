@@ -4,6 +4,8 @@ BAuth is an app that uses sensor data from mobile devices to authenticate users.
 
 The BAuth Demo Dashboard can be used to get an idea of how the data that BAuth uses looks like. That includes sensor data, features, classification results and trust levels.
 
+![Dashboard Screenshot](https://raw.githubusercontent.com/neXenio/BAuth-Demo-Dashboard/master/media/dashboard-screenshot.jpg)
+
 > Please note that production versions of BAuth are not allowed to transfer any data (for privacy reasons), to use the dashboard you need to deploy BAuth with the *Demo* flavour.
 
 ### Start the BAuth Demo Server
