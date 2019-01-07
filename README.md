@@ -2,7 +2,7 @@
 
 BAuth is an app that uses sensor data from mobile devices to authenticate users. You can read more about it [here](https://www.nexenio.com/bauth).
 
-The BAuth Demo Dashboard can be used to get an idea of how the data that BAuth uses looks like. That includes sensor data, features, classification results and trust levels.
+The [BAuth Demo Dashboard](https://nexenio.github.io/BAuth-Demo-Dashboard/) can be used to get an idea of how the data that BAuth uses looks like. That includes sensor data, features, classification results and trust levels.
 
 ![Dashboard Screenshot](https://raw.githubusercontent.com/neXenio/BAuth-Demo-Dashboard/master/media/dashboard-screenshot.jpg)
 
@@ -20,6 +20,6 @@ Start the BAuth app and navigate to `Settings > Recording` and enable `Stream Da
 
 ### Open the BAuth Demo Dashboard
 
-The BAuth Demo Dashboard is a simple website hosted on [JSFiddle](https://jsfiddle.net/Steppschuh/3r8e2zmh/embedded/result). It connects to the BAuth Demo Server websocket and visualizes the streamed data.
+The BAuth Demo Dashboard is a simple website hosted on [JSFiddle](https://jsfiddle.net/Steppschuh/3r8e2zmh/). It connects to the BAuth Demo Server websocket and visualizes the streamed data.
 
 Please feel free to fork the JSFiddle and adjust the visualizations for your needs.
