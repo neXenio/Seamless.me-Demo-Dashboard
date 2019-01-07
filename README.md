@@ -18,6 +18,39 @@ In case that it's not currently running, simply open [this URL](https://repl.it/
 
 Start the BAuth app and navigate to `Settings > Recording` and enable `Stream Data`. This will connect to the BAuth Demo Server websocket and start streaming data. You need a working internet connection.
 
+The data streamed to the dashboards will be similar to a smaller version of [this](https://github.com/neXenio/BAuth-Demo-Dashboard/blob/master/media/record-container.json) complete data recording container.
+
+```json
+{
+  "deviceInfo": {
+    "id": "fe1d0161473ed376",
+    "manufacturer": "Google",
+    "model": "Pixel 2",
+    "name": "neXenio Pixel 2",
+    "os": "Android 9"
+  },
+  "startTimestamp": 1545136791029,
+  "endTimestamp": 1545136794995,
+  "recordings": [
+    {
+      "dataId": "AccelerometerSensorData",
+      "dataList": [
+        {
+          "values": [
+            0.1229095458984375,
+            7.7093658447265625,
+            6.202667236328125
+          ],
+          "aggregationTimestamp": 1545136791101
+        },
+        ...
+      ]
+    },
+    ...
+  ]
+}
+```
+
 ### Open the BAuth Demo Dashboard
 
 The BAuth Demo Dashboard is a simple website hosted on [JSFiddle](https://jsfiddle.net/Steppschuh/3r8e2zmh/). It connects to the BAuth Demo Server websocket and visualizes the streamed data.
