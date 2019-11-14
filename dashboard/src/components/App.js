@@ -50,7 +50,7 @@ function App() {
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [recreateChartPlot, updateRecreateChartPlot] = useState(true);
-  const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [selectedDataId, updateSelectedDataId] = useState('');
 
 
   useEffect(() => {
