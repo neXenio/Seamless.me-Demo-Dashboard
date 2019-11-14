@@ -25,8 +25,7 @@ const Visualization = (props) => {
   const recreateChartPlot = useRef(true);
 
 
-  useEffect(
-    () => {
+  useEffect(() => {
         const intervalID = window.setInterval(render, RENDERING_INTERVAL);
         return () => {
           clearInterval(intervalID)
