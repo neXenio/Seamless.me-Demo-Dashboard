@@ -38,7 +38,6 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
-  const [recreateChartPlot, updateRecreateChartPlot] = useState(true);
   const [selectedDataId, updateSelectedDataId] = useState('');
 
 
@@ -183,7 +182,6 @@ function App() {
 
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
-    updateRecreateChartPlot(true);
   }
 
 
