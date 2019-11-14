@@ -12,7 +12,6 @@ import { Row } from 'react-materialize';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
-import ModalView from './ModalView.js';
 import Visualization from './Visualization.js';
 
 // SOCKET
