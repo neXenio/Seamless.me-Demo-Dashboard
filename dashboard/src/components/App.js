@@ -6,9 +6,9 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 // import M from 'react-materialize';
-import M from '../materialize/materialize.js';
+// import M from '../materialize/materialize.js';
 import 'materialize-css'; 
-import '../materialize/materialize.min.css';
+import '../materialize/materialize.css';
 import './App.css';
 import { Row } from 'react-materialize';
 import Logo from './Logo.js';
