@@ -119,3 +119,6 @@ class DataRecordingContainer {
     }
 
 }
+
+
+export default DataRecordingContainer;
