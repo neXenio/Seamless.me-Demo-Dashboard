@@ -5,6 +5,8 @@ const MAXIMUM_DATA_AGE = CHART_PLOT_DURATION + (2 * MINIMUM_DATA_AGE);
 const MINIMUM_DATA_COUNT = 1;
 const MAXIMUM_DATA_COUNT = 5000;
 
+var timestampOffset = 0;
+
 class DataRecordingContainer {
 
     constructor() {

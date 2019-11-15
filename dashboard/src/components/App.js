@@ -23,7 +23,6 @@ const MESSAGE_DATA_RECORDING = 'data_recording';
 
 var socket;
 var selectedDevice;
-var timestampOffset = 0;
 var connectionStatus = false;
 
 
@@ -120,7 +119,7 @@ function App() {
 
         // update the connected devices array, place the new device first
         updateConnectedDeviceList((oldConnectedDeviceList) => {
-            var connectionStatus = true;
+            connectionStatus = true;
 
             oldConnectedDeviceList.forEach(function (oldDevice) {
                 if (oldDevice.id == device.id) {
