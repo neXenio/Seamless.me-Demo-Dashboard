@@ -28,6 +28,7 @@ const Visualization = (props) => {
         return () => {
           clearInterval(intervalID)
         }
+        /* eslint-disable-next-line react-hooks/exhaustive-deps */
     }, [props.selectedDataId]
   )
 

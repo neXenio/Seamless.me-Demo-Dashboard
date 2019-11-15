@@ -4,10 +4,9 @@
 */
 
 import React, { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 import { Row } from 'react-materialize';
 import 'materialize-css/dist/css/materialize.min.css';
-import io from 'socket.io-client';
-// import M from '../materialize/materialize.js'; 
 import './App.css';
 
 import Logo from './Logo.js';
@@ -55,7 +54,7 @@ function App() {
       console.log('Connected to the Demo Server');
       /* M.toast({
         html: 'Connected to the Demo Server'
-      }); */ 
+      }); */
       socket.send({
         key: MESSAGE_INITIALIZE_DASHBOARD,
         data: {
