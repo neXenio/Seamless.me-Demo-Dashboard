@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Icon, Row, Col, Card, Collapsible, CollapsibleItem, Select } from 'react-materialize';
+import { Col, Card, Select } from 'react-materialize';
 
  const Option = (props) => {
    return (

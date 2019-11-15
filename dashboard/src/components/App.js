@@ -1,28 +1,20 @@
 /*
-TODO
-  * GitHub Review Prozess
-  * create Issue tickets
-  * clear dataID list when device is changed
-  * show names instead of ids in the selector
-
-
- PROBLEMS:
- * For comparrison -> second dataRecordingContainer
-
  * Seamless.me Demo Dashboard
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import M from '../materialize/materialize.js';
-import '../materialize/materialize.min.css';
+// import M from 'react-materialize';
+// import M from '../materialize/materialize.js';
+import 'materialize-css'; 
+// import '../materialize/materialize.min.css';
 import './App.css';
 import { Row } from 'react-materialize';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
-import ModalView from './ModalView.js';
+// import ModalView from './ModalView.js';
 import Visualization from './Visualization.js';
 
 // SOCKET
@@ -49,7 +41,6 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
-  const [recreateChartPlot, updateRecreateChartPlot] = useState(true);
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
 
 
@@ -64,9 +55,9 @@ function App() {
 
     socket.on('connect', function() {
       console.log('Connected to the Demo Server');
-      M.toast({
+      /* M.toast({
         html: 'Connected to the Demo Server'
-      });
+      }); */ 
       socket.send({
         key: MESSAGE_INITIALIZE_DASHBOARD,
         data: {
@@ -105,7 +96,7 @@ function App() {
 
   // DEVICE + DATA INITIALIZATION
   function processDeviceInitialization(device) {
-    if (connectedDevices.filter(connectedDevice => connectedDevice.id == device.id).length == 0) {
+    if (connectedDevices.filter(connectedDevice => connectedDevice.id === device.id).length === 0) {
       console.log('Device initialization received: ' + JSON.stringify(device));
       onDeviceWithNewIdConnected(device);
     }
@@ -126,7 +117,7 @@ function App() {
     // updateStatusText('Processing partial data recording with ' + delay + 'ms delay')
 
     partialDataRecordingContainer.recordings.forEach(function(dataRecording) {
-      if (dataRecordingContainer.getData(dataRecording.dataId).length == 0) {
+      if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
         onDataWithNewIdReceived(dataRecording.dataId);
       }
       dataRecordingContainer.addDataRecording(dataRecording);
@@ -138,18 +129,18 @@ function App() {
 
     // update the connected devices array, place the new device first
     updateConnectedDeviceList((oldConnectedDeviceList) => {
-      var connectionStatus = true;
+      connectionStatus = true;
 
       oldConnectedDeviceList.forEach(function (oldDevice) {
-          if (oldDevice.id == device.id) {
+          if (oldDevice.id === device.id) {
             connectionStatus = false;
           }
       });
 
-      if (connectionStatus == true) {
-        M.toast({
+      if (connectionStatus === true) {
+        /* M.toast({
           html: device.name + ' connected'
-        });
+        }); */
         return oldConnectedDeviceList.concat(device);
       } else {
         return oldConnectedDeviceList;
@@ -162,7 +153,6 @@ function App() {
     console.log('Received first recording of data with ID: ' + id);
 
     var ids = dataRecordingContainer.getIds().sort();
-    var optionText = DataRecordingContainer.getReadableId(id);
 
     updateDataList([]);
 
@@ -184,7 +174,7 @@ function App() {
     setupSocket();
 
     var selectedDeviceId = event.target.value;
-    selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id == selectedDeviceId)[0];
+    selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
   }
@@ -193,7 +183,6 @@ function App() {
 
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
-    updateRecreateChartPlot(true);
   }
 
 
@@ -285,7 +274,7 @@ class DataRecordingContainer {
 
   getDimensions(id) {
     var data = this.getData(id);
-    if (data.length == 0) {
+    if (data.length === 0) {
       return 0;
     }
     var firstData = data[0];

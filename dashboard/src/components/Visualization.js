@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import createPlotlyComponent from 'react-plotly.js/factory'
 import Plotly from 'plotly.js';
-import { Row, Col, Card, Collapsible, CollapsibleItem, Icon, Select } from 'react-materialize';
+import { Col, Collapsible, CollapsibleItem, Icon } from 'react-materialize';
 
 
 const RENDERING_INTERVAL = 50;
@@ -132,7 +132,7 @@ const Visualization = (props) => {
 
   function updateChartPlot() {
     var data = dataRecordingContainerState.getData(props.selectedDataId);
-    if (data.length == 0) {
+    if (data.length === 0) {
       console.log('Not updating chart plot, no data available');
       return;
     }

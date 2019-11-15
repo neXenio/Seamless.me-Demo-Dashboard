@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Modal, Row, Col, Card, Select } from 'react-materialize';
+import { Row, Col, Card } from 'react-materialize';
 
 
 const Info = (props) => {
@@ -11,7 +11,7 @@ const Info = (props) => {
           className="card-content"
           textClassName="dark-text"
           title="Seamless.me Demo"
-          actions={[<a href="https://github.com/neXenio/BAuth-Demo-Dashboard" target="_blank" className="indigo-text">GitHub Repo</a>]}>
+          actions={[<a href="https://github.com/neXenio/BAuth-Demo-Dashboard" target="_blank" rel="noopener noreferrer" className="indigo-text" key="info-card">GitHub Repo</a>]}>
           This is a simple tool to visualize data aggregated by the Seamless.me app in real-time.
           <br/>
           <br/>
