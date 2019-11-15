@@ -7,11 +7,11 @@ const Info = (props) => {
   return (
     <Row>
       <Col m={6} s={12} l={4} offset="s0, m0, l0">
-        <Card
+         <Card
           className="card-content"
           textClassName="dark-text"
           title="Seamless.me Demo"
-          actions={[<a href="https://github.com/neXenio/BAuth-Demo-Dashboard" target="_blank" className="indigo-text" key="infoCard">GitHub Repo</a>]}>
+          actions={[<a href="https://github.com/neXenio/BAuth-Demo-Dashboard" target="_blank" className="indigo-text">GitHub Repo</a>]}>
           This is a simple tool to visualize data aggregated by the Seamless.me app in real-time.
           <br/>
           <br/>

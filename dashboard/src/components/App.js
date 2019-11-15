@@ -1,22 +1,28 @@
 /*
+TODO
+  * GitHub Review Prozess
+  * create Issue tickets
+  * clear dataID list when device is changed
+  * show names instead of ids in the selector
+
+
+ PROBLEMS:
+ * For comparrison -> second dataRecordingContainer
+
  * Seamless.me Demo Dashboard
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
- */
+*/
 
-import React, {
-  useEffect,
-  useState
-} from 'react';
+import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import M from '../materialize/materialize.js';
 import '../materialize/materialize.min.css';
 import './App.css';
-import {
-  Row
-} from 'react-materialize';
+import { Row } from 'react-materialize';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
+import ModalView from './ModalView.js';
 import Visualization from './Visualization.js';
 
 // SOCKET
@@ -43,11 +49,12 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
+  const [recreateChartPlot, updateRecreateChartPlot] = useState(true);
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
 
 
   useEffect(() => {
-    setupSocket();
+      setupSocket();
   }, [])
 
   // ESTABLISH CONNECTION
@@ -133,10 +140,10 @@ function App() {
     updateConnectedDeviceList((oldConnectedDeviceList) => {
       var connectionStatus = true;
 
-      oldConnectedDeviceList.forEach(function(oldDevice) {
-        if (oldDevice.id == device.id) {
-          connectionStatus = false;
-        }
+      oldConnectedDeviceList.forEach(function (oldDevice) {
+          if (oldDevice.id == device.id) {
+            connectionStatus = false;
+          }
       });
 
       if (connectionStatus == true) {
@@ -151,7 +158,6 @@ function App() {
   }
 
   function onDataWithNewIdReceived(id) {
-
     // first recording of data with that ID
     console.log('Received first recording of data with ID: ' + id);
 
@@ -166,10 +172,7 @@ function App() {
       var optionText = DataRecordingContainer.getReadableId(id);
 
       updateDataList((oldDataList) => {
-        return oldDataList.concat({
-          id: optionValue,
-          optionText: optionText
-        });
+        return oldDataList.concat({id: optionValue, optionText: optionText});
       });
     });
   }
@@ -190,7 +193,9 @@ function App() {
 
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
+    updateRecreateChartPlot(true);
   }
+
 
   return (
     <div className="section">
@@ -201,10 +206,13 @@ function App() {
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />
         </Row>
+        {/* <ModalView /> */}
       </div>
     </div>
   );
 }
+
+
 class DataRecordingContainer {
 
   constructor() {
@@ -284,11 +292,11 @@ class DataRecordingContainer {
     if (firstData.hasOwnProperty('value')) {
       return 1;
     } else {
-      var firstValue = firstData.values[0];
+    	var firstValue = firstData.values[0];
       if (firstValue instanceof Array) {
-        return firstData.values.length * firstValue.length;
+      	return firstData.values.length * firstValue.length;
       } else {
-        return firstData.values.length;
+      	return firstData.values.length;
       }
     }
   }
