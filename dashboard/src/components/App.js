@@ -13,12 +13,17 @@ TODO
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState } from 'react';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import io from 'socket.io-client';
 import M from '../materialize/materialize.js';
 import '../materialize/materialize.min.css';
 import './App.css';
-import { Row } from 'react-materialize';
+import {
+  Row
+} from 'react-materialize';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
@@ -54,7 +59,7 @@ function App() {
 
 
   useEffect(() => {
-      setupSocket();
+    setupSocket();
   }, [])
 
   // ESTABLISH CONNECTION
@@ -140,10 +145,10 @@ function App() {
     updateConnectedDeviceList((oldConnectedDeviceList) => {
       var connectionStatus = true;
 
-      oldConnectedDeviceList.forEach(function (oldDevice) {
-          if (oldDevice.id == device.id) {
-            connectionStatus = false;
-          }
+      oldConnectedDeviceList.forEach(function(oldDevice) {
+        if (oldDevice.id == device.id) {
+          connectionStatus = false;
+        }
       });
 
       if (connectionStatus == true) {
@@ -172,7 +177,10 @@ function App() {
       var optionText = DataRecordingContainer.getReadableId(id);
 
       updateDataList((oldDataList) => {
-        return oldDataList.concat({id: optionValue, optionText: optionText});
+        return oldDataList.concat({
+          id: optionValue,
+          optionText: optionText
+        });
       });
     });
   }
@@ -292,11 +300,11 @@ class DataRecordingContainer {
     if (firstData.hasOwnProperty('value')) {
       return 1;
     } else {
-    	var firstValue = firstData.values[0];
+      var firstValue = firstData.values[0];
       if (firstValue instanceof Array) {
-      	return firstData.values.length * firstValue.length;
+        return firstData.values.length * firstValue.length;
       } else {
-      	return firstData.values.length;
+        return firstData.values.length;
       }
     }
   }
