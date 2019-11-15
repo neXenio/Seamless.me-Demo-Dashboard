@@ -42,13 +42,13 @@ function App() {
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
 
-
   useEffect(() => {
       setupSocket();
+      /* eslint-disable-next-line react-hooks/exhaustive-deps */
   }, [])
 
   // ESTABLISH CONNECTION
-  function setupSocket() {
+  const setupSocket = () => {
 
     socket = io(BAUTH_DEMO_SERVER);
 
