@@ -1,3 +1,10 @@
+// CHART
+const CHART_PLOT_DURATION = 30 * 1000;
+const MINIMUM_DATA_AGE = 500;
+const MAXIMUM_DATA_AGE = CHART_PLOT_DURATION + (2 * MINIMUM_DATA_AGE);
+const MINIMUM_DATA_COUNT = 1;
+const MAXIMUM_DATA_COUNT = 5000;
+
 class DataRecordingContainer {
 
     constructor() {

@@ -13,20 +13,13 @@ import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
 import Visualization from './Visualization.js';
-import 'DataRecordingContainer';
+import DataRecordingContainer from './dataRecordingContainer.js';
 
 // SOCKET
 const BAUTH_DEMO_SERVER = 'https://bauth-demo-server--steppschuh.repl.co/';
 const MESSAGE_INITIALIZE_DEVICE = 'initialize_device';
 const MESSAGE_INITIALIZE_DASHBOARD = 'initialize_dashboard';
 const MESSAGE_DATA_RECORDING = 'data_recording';
-
-// CHART
-const CHART_PLOT_DURATION = 30 * 1000;
-const MINIMUM_DATA_AGE = 500;
-const MAXIMUM_DATA_AGE = CHART_PLOT_DURATION + (2 * MINIMUM_DATA_AGE);
-const MINIMUM_DATA_COUNT = 1;
-const MAXIMUM_DATA_COUNT = 5000;
 
 var socket;
 var selectedDevice;
