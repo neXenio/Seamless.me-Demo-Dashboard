@@ -5,8 +5,8 @@
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import M from 'react-materialize';
-// import M from '../materialize/materialize.js';
+// import M from 'react-materialize';
+import M from '../materialize/materialize.js';
 import 'materialize-css'; 
 import '../materialize/materialize.min.css';
 import './App.css';
