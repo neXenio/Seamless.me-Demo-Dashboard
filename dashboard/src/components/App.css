@@ -10,20 +10,17 @@ main {
     width: 100%;
 }
 
-
 /* label color */
 
 .input-field label {
     color: #000;
 }
 
-
 /* label focus color */
 
 .input-field input[type=text]:focus+label {
     color: #000;
 }
-
 
 /* label underline focus color */
 
@@ -32,7 +29,6 @@ main {
     box-shadow: 0 1px 0 0 #000;
 }
 
-
 /* valid color */
 
 .input-field input[type=text].valid {
@@ -40,14 +36,12 @@ main {
     box-shadow: 0 1px 0 0 #000;
 }
 
-
 /* invalid color */
 
 .input-field input[type=text].invalid {
     border-bottom: 1px solid #000;
     box-shadow: 0 1px 0 0 #000;
 }
-
 
 /* icon prefix focus color */
 
@@ -63,8 +57,7 @@ main {
     color: #05142E;
 }
 
-.tabs .tab a:hover,
-.tabs .tab a.active {
+.tabs .tab a:hover, .tabs .tab a.active {
     color: #05142E;
 }
 
@@ -106,9 +99,7 @@ main {
     height: auto;
 }
 
-
 /* Copied from https://fonts.googleapis.com/icon?family=Material+Icons */
-
 
 /* fallback */
 
