@@ -9,9 +9,6 @@ const RENDERING_INTERVAL = 50;
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
 const MINIMUM_DATA_AGE = 500;
-const MAXIMUM_DATA_AGE = CHART_PLOT_DURATION + (2 * MINIMUM_DATA_AGE);
-const MINIMUM_DATA_COUNT = 1;
-const MAXIMUM_DATA_COUNT = 5000;
 
 var timestampOffset = 0;
 
@@ -137,8 +134,8 @@ const Visualization = (props) => {
       return;
     }
 
-    var firstData = data[0];
-    var lastData = data[data.length - 1];
+    // var firstData = data[0];
+    // var lastData = data[data.length - 1];
     var dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
     var timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
