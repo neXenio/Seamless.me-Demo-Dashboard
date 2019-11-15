@@ -5,16 +5,15 @@
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-// import M from 'react-materialize';
+import M from 'react-materialize';
 // import M from '../materialize/materialize.js';
 import 'materialize-css'; 
-// import '../materialize/materialize.min.css';
+import '../materialize/materialize.min.css';
 import './App.css';
 import { Row } from 'react-materialize';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
-// import ModalView from './ModalView.js';
 import Visualization from './Visualization.js';
 
 // SOCKET
@@ -195,7 +194,6 @@ function App() {
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />
         </Row>
-        {/* <ModalView /> */}
       </div>
     </div>
   );
