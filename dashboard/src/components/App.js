@@ -4,13 +4,12 @@
 */
 
 import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
-// import M from 'react-materialize';
-// import M from '../materialize/materialize.js';
-import 'materialize-css'; 
-import '../materialize/materialize.min.css';
-import './App.css';
 import { Row } from 'react-materialize';
+import io from 'socket.io-client';
+import 'materialize-css';
+import '../materialize/materialize.min.css';
+import M from '../materialize/materialize.js'; 
+import './App.css';
 import Logo from './Logo.js';
 import Info from './Info.js';
 import Device from './Device.js';
@@ -170,12 +169,13 @@ function App() {
   // HANDLE SELECT-CHANGE
   function handleDeviceChange(event) {
 
+    updateDataRecordingContainer(new DataRecordingContainer());
+
     setupSocket();
 
     var selectedDeviceId = event.target.value;
     selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
-    updateDataRecordingContainer(new DataRecordingContainer());
   }
 
   function handleDataChange(event) {
