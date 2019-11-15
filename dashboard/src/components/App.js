@@ -1,5 +1,14 @@
 /*
 TODO
+  * GitHub Review Prozess
+  * create Issue tickets
+  * clear dataID list when device is changed
+  * show names instead of ids in the selector
+
+
+ PROBLEMS:
+ * For comparrison -> second dataRecordingContainer
+
  * Seamless.me Demo Dashboard
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
