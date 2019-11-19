@@ -15,7 +15,8 @@ var timestampOffset = 0;
 const Plot = createPlotlyComponent(Plotly);
 
 const Visualization = (props) => {
-
+  
+  // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const [layoutState, updateLayout] = useState({});
   const [tracesState, updateTraces] = useState([{}]);
@@ -25,11 +26,10 @@ const Visualization = (props) => {
   useEffect(
     () => {
         const intervalID = window.setInterval(render, RENDERING_INTERVAL);
-        return () => {
-          clearInterval(intervalID)
-        }
-        /* eslint-disable-next-line react-hooks/exhaustive-deps */
-    }, [props.selectedDataId]
+        return () => clearInterval(intervalID);
+    }, 
+      // eslint-disable-next-line 
+      [props.selectedDataId]
   )
 
 
