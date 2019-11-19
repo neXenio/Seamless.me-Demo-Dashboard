@@ -90,7 +90,7 @@ function App() {
 
   // DEVICE + DATA INITIALIZATION
   function processDeviceInitialization(device) {
-    if (connectedDevices.filter(connectedDevice => connectedDevice.id === device.id).length === 0) {
+    if (!connectedDevices.some(connectedDevice => connectedDevice.id === device.id)) {
       console.log('Device initialization received: ' + JSON.stringify(device));
       onDeviceWithNewIdConnected(device);
     }
