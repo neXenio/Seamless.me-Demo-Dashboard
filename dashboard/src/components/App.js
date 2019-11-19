@@ -171,7 +171,8 @@ function App() {
     setupSocket();
 
     var selectedDeviceId = event.target.value;
-    selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
+    // selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
+    selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
   }
