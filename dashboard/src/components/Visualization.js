@@ -10,7 +10,7 @@ const RENDERING_INTERVAL = 50;
 const CHART_PLOT_DURATION = 30 * 1000;
 const MINIMUM_DATA_AGE = 500;
 
-var timestampOffset = 0;
+let timestampOffset = 0;
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -36,31 +36,31 @@ const Visualization = (props) => {
 
   // CHART INITIALIZATION
   function render() {
-    var renderingStartTimestamp = Date.now();
+    let renderingStartTimestamp = Date.now();
 
     updateChartPlot();
 
-    var renderingDuration = Date.now() - renderingStartTimestamp;
+    let renderingDuration = Date.now() - renderingStartTimestamp;
     if (renderingDuration > RENDERING_INTERVAL) {
       // console.log('Rendering is too slow: ' + renderingDuration + 'ms');
     }
   }
 
   function getChartMarkerColor(dimension) {
-  	var colors = [ '#82C9C2' , '#5D77A7', '#FF66FF' ]
+  	const colors = [ '#82C9C2' , '#5D77A7', '#FF66FF' ]
     return colors[dimension % colors.length]
   }
 
   function createChartPlot(dimensions) {
     console.log("chart created");
-    var traces = [];
+    let traces = [];
 
     // add properties for each dimension
-    for (var dimension = 1; dimension <= dimensions; dimension++) {
-      var color = getChartMarkerColor(dimension - 1);
-      var xAxis = 'x' + dimension;
-      var yAxis = 'y' + dimension;
-      var trace = {
+    for (let dimension = 1; dimension <= dimensions; dimension++) {
+      let color = getChartMarkerColor(dimension - 1);
+      let xAxis = 'x' + dimension;
+      let yAxis = 'y' + dimension;
+      let trace = {
         x: [0],
         y: [0],
         xaxis: xAxis,
@@ -74,7 +74,7 @@ const Visualization = (props) => {
       }
       traces.push(trace);
     }
-    var layout = createChartPlotLayout(dimensions, 1);
+    let layout = createChartPlotLayout(dimensions, 1);
     updateLayout(layout);
     updateTraces(traces);
 
@@ -82,7 +82,7 @@ const Visualization = (props) => {
   }
 
   function createChartPlotLayout(dimensions, duration) {
-    var defaultXAxis = {
+    let defaultXAxis = {
       showgrid: false,
       zeroline: false,
       ticks: '',
@@ -90,7 +90,7 @@ const Visualization = (props) => {
       range: [-duration, 0]
     };
 
-    var defaultYAxis = {
+    let defaultYAxis = {
       showline: false,
       zeroline: false,
       tickfont: {
@@ -98,7 +98,7 @@ const Visualization = (props) => {
       },
     };
 
-    var layout = {
+    let layout = {
       grid: {
         rows: 3,
         columns: 1,
@@ -118,9 +118,9 @@ const Visualization = (props) => {
     };
 
     // add properties for each dimension
-    for (var dimension = 1; dimension <= dimensions; dimension++) {
-      var xAxisName = 'xaxis' + dimension;
-      var yAxisName = 'yaxis' + dimension;
+    for (let dimension = 1; dimension <= dimensions; dimension++) {
+      let xAxisName = 'xaxis' + dimension;
+      let yAxisName = 'yaxis' + dimension;
       layout[xAxisName] = defaultXAxis;
       layout[yAxisName] = defaultYAxis;
     }
@@ -129,7 +129,7 @@ const Visualization = (props) => {
   }
 
   function updateChartPlot() {
-    var data = dataRecordingContainerState.getData(props.selectedDataId);
+    let data = dataRecordingContainerState.getData(props.selectedDataId);
     if (data.length === 0) {
       console.log('Not updating chart plot, no data available');
       return;
@@ -137,23 +137,23 @@ const Visualization = (props) => {
 
     // var firstData = data[0];
     // var lastData = data[data.length - 1];
-    var dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
+    let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
-    var timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
-    var endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
-    var startTimestamp = endTimestamp - CHART_PLOT_DURATION;
-    var duration = endTimestamp - startTimestamp;
-    var delays = timestamps.map(timestamp => (timestamp - endTimestamp));
+    let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
+    let endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+    let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
+    let duration = endTimestamp - startTimestamp;
+    let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
 
-    var xValues = [];
-    var yValues = [];
-    for (var dimension = 0; dimension < dimensions; dimension++) {
-      var valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
+    let xValues = [];
+    let yValues = [];
+    for (let dimension = 0; dimension < dimensions; dimension++) {
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
       xValues.push(delays);
       yValues.push(valuesInDimenion);
     }
 
-    var dataUpdate = {
+    let dataUpdate = {
       x: xValues,
       y: yValues
     }

@@ -4,7 +4,7 @@ const MAXIMUM_DATA_AGE = CHART_PLOT_DURATION + (2 * MINIMUM_DATA_AGE);
 const MINIMUM_DATA_COUNT = 1;
 const MAXIMUM_DATA_COUNT = 5000;
 
-var timestampOffset = 0;
+let timestampOffset = 0;
 
 class DataRecordingContainer {
 
@@ -45,7 +45,7 @@ class DataRecordingContainer {
   
     getDataValuesInDimension(id, dimension) {
       // var values = [];
-      var maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+      let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
       /* this.getData(id)
         .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
         .forEach(data => {
@@ -84,8 +84,8 @@ class DataRecordingContainer {
     }
   
     getDataTimestamps(id) {
-      var timestamps = [];
-      var maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+      let timestamps = [];
+      let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
       this.getData(id)
         .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
         .forEach(data => timestamps.push(data.aggregationTimestamp));
@@ -93,15 +93,15 @@ class DataRecordingContainer {
     }
   
     getDimensions(id) {
-      var data = this.getData(id);
+      let data = this.getData(id);
       if (data.length === 0) {
         return 0;
       }
-      var firstData = data[0];
+      let firstData = data[0];
       if (firstData.hasOwnProperty('value')) {
         return 1;
       } else {
-          var firstValue = firstData.values[0];
+          let firstValue = firstData.values[0];
         if (firstValue instanceof Array) {
             return firstData.values.length * firstValue.length;
         } else {
@@ -111,9 +111,9 @@ class DataRecordingContainer {
     }
   
     trim() {
-      var minimumAggregationTimestamp = Date.now() - MAXIMUM_DATA_AGE - timestampOffset;
+      let minimumAggregationTimestamp = Date.now() - MAXIMUM_DATA_AGE - timestampOffset;
       this.getIds().forEach(function(id) {
-        var trimmedData = this.getData(id);
+        let trimmedData = this.getData(id);
   
         // trim based on count
         if (trimmedData.length > MAXIMUM_DATA_COUNT) {
@@ -135,7 +135,7 @@ class DataRecordingContainer {
     }
   
     static getReadableId(id) {
-      var readableId = id.substring(id.lastIndexOf(".") + 1);
+      let readableId = id.substring(id.lastIndexOf(".") + 1);
       readableId = readableId.replace('Rx', '');
       readableId = readableId.replace('Data', '');
       readableId = readableId.replace(/([A-Z])/g, ' $1').trim() // add spaces before capital letters

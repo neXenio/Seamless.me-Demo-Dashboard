@@ -25,9 +25,9 @@ const MESSAGE_DATA_RECORDING = 'data_recording';
 
 const delayLimit = 1000;
 
-var socket;
-var selectedDevice;
-var timestampOffset = 0;
+let socket;
+let selectedDevice;
+let timestampOffset = 0;
 
 
 function App() {
@@ -67,8 +67,8 @@ function App() {
           message = JSON.parse(message);
         }
 
-        var key = message.key;
-        var data = message.data;
+        let key = message.key;
+        let data = message.data;
 
         switch (key) {
           case MESSAGE_INITIALIZE_DEVICE:
@@ -102,7 +102,7 @@ function App() {
       return;
     }
 
-    var delay = Date.now() - partialDataRecordingContainer.endTimestamp;
+    let delay = Date.now() - partialDataRecordingContainer.endTimestamp;
     if (Math.abs(timestampOffset - delay) > delayLimit) {
       timestampOffset = delay - delayLimit;
       console.log("Updated timestamp offset to " + timestampOffset);
@@ -148,13 +148,13 @@ function App() {
     // first recording of data with that ID
     console.log('Received first recording of data with ID: ' + id);
 
-    var ids = dataRecordingContainer.getIds().sort();
+    let ids = dataRecordingContainer.getIds().sort();
 
     updateDataList([]);
 
     // append available IDs as options
     ids.forEach(id => {
-      var optionText = DataRecordingContainer.getReadableId(id);
+      let optionText = DataRecordingContainer.getReadableId(id);
 
       updateDataList((oldDataList) => {
         // return oldDataList.concat({id: optionValue, optionText: optionText});
@@ -172,7 +172,7 @@ function App() {
 
     setupSocket();
 
-    var selectedDeviceId = event.target.value;
+    let selectedDeviceId = event.target.value;
     // selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
