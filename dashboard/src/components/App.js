@@ -24,6 +24,7 @@ const MESSAGE_INITIALIZE_DASHBOARD = 'initialize_dashboard';
 const MESSAGE_DATA_RECORDING = 'data_recording';
 
 const delayLimit = 1000;
+const DELAY_LIMIT = 1000;
 
 let socket;
 let selectedDevice;
@@ -103,8 +104,8 @@ function App() {
     }
 
     let delay = Date.now() - partialDataRecordingContainer.endTimestamp;
-    if (Math.abs(timestampOffset - delay) > delayLimit) {
-      timestampOffset = delay - delayLimit;
+    if (Math.abs(timestampOffset - delay) > DELAY_LIMIT) {
+      timestampOffset = delay - DELAY_LIMIT;
       console.log("Updated timestamp offset to " + timestampOffset);
     }
 
