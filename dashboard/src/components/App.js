@@ -22,8 +22,6 @@ const BAUTH_DEMO_SERVER = 'https://bauth-demo-server--steppschuh.repl.co/';
 const MESSAGE_INITIALIZE_DEVICE = 'initialize_device';
 const MESSAGE_INITIALIZE_DASHBOARD = 'initialize_dashboard';
 const MESSAGE_DATA_RECORDING = 'data_recording';
-
-const delayLimit = 1000;
 const DELAY_LIMIT = 1000;
 
 let socket;
