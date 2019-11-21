@@ -15,7 +15,7 @@ let timestampOffset = 0;
 const Plot = createPlotlyComponent(Plotly);
 
 const Visualization = (props) => {
-  
+
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const [layoutState, updateLayout] = useState({});
@@ -25,11 +25,11 @@ const Visualization = (props) => {
 
   useEffect(
     () => {
-        const intervalID = window.setInterval(render, RENDERING_INTERVAL);
-        return () => clearInterval(intervalID);
-    }, 
-      // eslint-disable-next-line 
-      [props.selectedDataId]
+      const intervalID = window.setInterval(render, RENDERING_INTERVAL);
+      return () => clearInterval(intervalID);
+    },
+    // eslint-disable-next-line 
+    [props.selectedDataId]
   )
 
 
@@ -47,7 +47,7 @@ const Visualization = (props) => {
   }
 
   function getChartMarkerColor(dimension) {
-  	const colors = [ '#82C9C2' , '#5D77A7', '#FF66FF' ]
+    const colors = ['#82C9C2', '#5D77A7', '#FF66FF']
     return colors[dimension % colors.length]
   }
 
@@ -175,9 +175,9 @@ const Visualization = (props) => {
       <Collapsible accordion={false} className="col s12 m12 l8 offset-s0 offset-m0 offset-l2">
         <CollapsibleItem header="Multiple Charts" icon={<Icon>show_chart</Icon>}>
           <Plot
-              divId="chart-plot-container"
-              data={tracesState}
-              layout={layoutState}
+            divId="chart-plot-container"
+            data={tracesState}
+            layout={layoutState}
           />
         </CollapsibleItem>
         <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>

@@ -38,8 +38,8 @@ function App() {
 
 
   useEffect(() => {
-      setupSocket();
-      // eslint-disable-next-line
+    setupSocket();
+    // eslint-disable-next-line
   }, [])
 
   // ESTABLISH CONNECTION
@@ -47,7 +47,7 @@ function App() {
 
     socket = io(BAUTH_DEMO_SERVER);
 
-    socket.on('connect', function() {
+    socket.on('connect', function () {
       console.log('Connected to the Demo Server');
       M.toast({
         html: 'Connected to the Demo Server'
@@ -60,7 +60,7 @@ function App() {
       });
     });
 
-    socket.on('message', function(message) {
+    socket.on('message', function (message) {
       try {
         if (typeof message === 'string') {
           message = JSON.parse(message);
@@ -109,7 +109,7 @@ function App() {
 
     // updateStatusText('Processing partial data recording with ' + delay + 'ms delay')
 
-    partialDataRecordingContainer.recordings.forEach(function(dataRecording) {
+    partialDataRecordingContainer.recordings.forEach(function (dataRecording) {
       if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
         onDataWithNewIdReceived(dataRecording.dataId);
       }
@@ -187,7 +187,7 @@ function App() {
 
   return (
     <div className="section">
-    <Logo />
+      <Logo />
       <div className="row">
         <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} />
         <Row>
