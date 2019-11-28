@@ -6,6 +6,7 @@ import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materiali
 
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
+const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 let timestampOffset = 0;
@@ -163,12 +164,13 @@ const Visualization = (props) => {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('chart-plot-container', dataUpdate)
 
+      // UPDATING THE COMPARISON CHART
       if (newDataVisualisationStatus.current) {
         let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
         let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
         let endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
-        let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
+        let startTimestamp = endTimestamp - COMPARISON_CHART_PLOT_DURATION;
         let duration = endTimestamp - startTimestamp;
         let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
 
@@ -197,7 +199,7 @@ const Visualization = (props) => {
   }
 
   function stopNewDataVisualisation() {
-
+    newDataVisualisationStatus.current = false;
   }
 
 
@@ -210,10 +212,10 @@ const Visualization = (props) => {
             divId="chart-plot-container"
           />
           <Button waves="light" style={{ marginRight: '5px' }} onClick={startNewDataVisualisation}>
-            Start comparing with another data stream
+            Start comparing
           </Button>
           <Button waves="light" style={{ marginRight: '5px' }} onClick={stopNewDataVisualisation}>
-            Stop comparing with another data stream
+            Stop comparing
           </Button>
           <Plot
             divId="second-chart-plot-container"
