@@ -69,9 +69,9 @@ const Visualization = (props) => {
       traces.push(trace);
     }
     let layout = createChartPlotLayout(dimensions, 1);
-    // updateLayout(layout);
-    // updateTraces(traces);
+
     Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
+    Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
 
     recreateChartPlot.current = false;
   }
@@ -158,6 +158,9 @@ const Visualization = (props) => {
     } else {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('chart-plot-container', dataUpdate)
+
+      Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
+      Plotly.restyle('second-chart-plot-container', dataUpdate)
     }
   }
 
@@ -179,7 +182,7 @@ const Visualization = (props) => {
             Stop comparing with another data stream
           </Button>
           <Plot
-            divId="chart-plot-second-container"
+            divId="second-chart-plot-container"
           />
         </CollapsibleItem>
         <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
