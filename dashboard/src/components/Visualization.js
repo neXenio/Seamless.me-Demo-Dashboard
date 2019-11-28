@@ -17,6 +17,8 @@ const Visualization = (props) => {
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
   const newDataVisualisationStatus = useRef(false);
+  const startTimestampValue = useRef();
+  const endTimestampValue = useRef();
 
 
   useEffect(
@@ -166,39 +168,51 @@ const Visualization = (props) => {
 
       // UPDATING THE COMPARISON CHART
       if (newDataVisualisationStatus.current) {
-        let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
+        let dimensionsC = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
-        let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
-        let endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
-        let startTimestamp = endTimestamp - COMPARISON_CHART_PLOT_DURATION;
-        let duration = endTimestamp - startTimestamp;
-        let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
+        let timestampsC = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
+        var endTimestampC;
 
-        let xValues = [];
-        let yValues = [];
-        for (let dimension = 0; dimension < dimensions; dimension++) {
+        if (endTimestampValue.current) {
+          endTimestampC = endTimestampValue.current
+        } else {
+          endTimestampC = Date.now() - timestampOffset;
+        }
+
+        let startTimestampC = startTimestampValue.current - COMPARISON_CHART_PLOT_DURATION;
+        let durationC = endTimestampC - startTimestampC;
+        let delaysC = timestampsC.map(timestamp => (timestamp - endTimestampC));
+
+        let xValuesC = [];
+        let yValuesC = [];
+        for (let dimension = 0; dimension < dimensionsC; dimension++) {
           let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
-          xValues.push(delays);
-          yValues.push(valuesInDimenion);
+          xValuesC.push(delaysC);
+          yValuesC.push(valuesInDimenion);
         }
 
-        let dataUpdate = {
-          x: xValues,
-          y: yValues
+        let dataUpdateC = {
+          x: xValuesC,
+          y: yValuesC
         }
 
-        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
-        Plotly.restyle('second-chart-plot-container', dataUpdate)
+        console.log("Start: " + startTimestampC);
+        console.log("End: " + endTimestampC);
+
+        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
+        Plotly.restyle('second-chart-plot-container', dataUpdateC)
       }
     }
   }
 
   function startNewDataVisualisation() {
+    startTimestampValue.current = Date.now();
     newDataVisualisationStatus.current = true;
     recreateChartPlot.current = true;
   }
 
   function stopNewDataVisualisation() {
+    endTimestampValue.current = Date.now();
     newDataVisualisationStatus.current = false;
   }
 
