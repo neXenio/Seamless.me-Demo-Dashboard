@@ -15,6 +15,7 @@ const Visualization = (props) => {
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
+  const newDataVisualisationStatus = useRef(false);
 
 
   useEffect(
@@ -71,7 +72,10 @@ const Visualization = (props) => {
     let layout = createChartPlotLayout(dimensions, 1);
 
     Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
-    Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
+
+    if (newDataVisualisationStatus.current) {
+      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
+    }
 
     recreateChartPlot.current = false;
   }
@@ -159,13 +163,37 @@ const Visualization = (props) => {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('chart-plot-container', dataUpdate)
 
-      Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
-      Plotly.restyle('second-chart-plot-container', dataUpdate)
+      if (newDataVisualisationStatus.current) {
+        let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
+
+        let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
+        let endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+        let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
+        let duration = endTimestamp - startTimestamp;
+        let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
+
+        let xValues = [];
+        let yValues = [];
+        for (let dimension = 0; dimension < dimensions; dimension++) {
+          let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
+          xValues.push(delays);
+          yValues.push(valuesInDimenion);
+        }
+
+        let dataUpdate = {
+          x: xValues,
+          y: yValues
+        }
+
+        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
+        Plotly.restyle('second-chart-plot-container', dataUpdate)
+      }
     }
   }
 
   function startNewDataVisualisation() {
-
+    newDataVisualisationStatus.current = true;
+    recreateChartPlot.current = true;
   }
 
   function stopNewDataVisualisation() {
