@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import createPlotlyComponent from 'react-plotly.js/factory'
 import Plotly from 'plotly.js';
-import { Col, Collapsible, CollapsibleItem, Icon } from 'react-materialize';
+import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materialize';
 
 
 // CHART
@@ -164,7 +164,13 @@ const Visualization = (props) => {
     }
   }
 
+  function startNewDataVisualisation() {
 
+  }
+
+  function stopNewDataVisualisation() {
+
+  }
 
 
   return (
