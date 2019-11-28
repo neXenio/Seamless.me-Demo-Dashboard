@@ -4,22 +4,16 @@ import Plotly from 'plotly.js';
 import { Col, Collapsible, CollapsibleItem, Icon } from 'react-materialize';
 
 
-const RENDERING_INTERVAL = 50;
-
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
 const MINIMUM_DATA_AGE = 500;
-
+const RENDERING_INTERVAL = 50;
 let timestampOffset = 0;
-
 const Plot = createPlotlyComponent(Plotly);
 
 const Visualization = (props) => {
-
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
-  const [layoutState, updateLayout] = useState({});
-  const [tracesState, updateTraces] = useState([{}]);
   const recreateChartPlot = useRef(true);
 
 
@@ -75,8 +69,9 @@ const Visualization = (props) => {
       traces.push(trace);
     }
     let layout = createChartPlotLayout(dimensions, 1);
-    updateLayout(layout);
-    updateTraces(traces);
+    // updateLayout(layout);
+    // updateTraces(traces);
+    Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
 
     recreateChartPlot.current = false;
   }
@@ -176,8 +171,15 @@ const Visualization = (props) => {
         <CollapsibleItem header="Multiple Charts" icon={<Icon>show_chart</Icon>}>
           <Plot
             divId="chart-plot-container"
-            data={tracesState}
-            layout={layoutState}
+          />
+          <Button waves="light" style={{ marginRight: '5px' }} onClick={startNewDataVisualisation}>
+            Start comparing with another data stream
+          </Button>
+          <Button waves="light" style={{ marginRight: '5px' }} onClick={stopNewDataVisualisation}>
+            Stop comparing with another data stream
+          </Button>
+          <Plot
+            divId="chart-plot-second-container"
           />
         </CollapsibleItem>
         <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
