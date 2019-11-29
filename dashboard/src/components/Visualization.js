@@ -16,7 +16,7 @@ const Visualization = (props) => {
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
-  const newDataVisualisationStatus = useRef(false);
+  const newDataVisualisationStatus = useRef();
   const startTimestampValue = useRef();
   const endTimestampValue = useRef();
 
@@ -167,7 +167,7 @@ const Visualization = (props) => {
       Plotly.restyle('chart-plot-container', dataUpdate)
 
       // UPDATING THE COMPARISON CHART
-      if (newDataVisualisationStatus.current) {
+      if (newDataVisualisationStatus.current === true) {
         let dimensionsC = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
         let timestampsC = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
