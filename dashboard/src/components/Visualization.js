@@ -186,9 +186,9 @@ const Visualization = (props) => {
         let xValuesC = [];
         let yValuesC = [];
         for (let dimension = 0; dimension < dimensionsC; dimension++) {
-          let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
+          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
           xValuesC.push(delaysC);
-          yValuesC.push(valuesInDimenion);
+          yValuesC.push(valuesInDimenionC);
         }
 
         let dataUpdateC = {
