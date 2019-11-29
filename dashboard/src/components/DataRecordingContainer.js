@@ -83,6 +83,46 @@ class DataRecordingContainer {
     // return values;
   }
 
+  getDataValuesInDimensionForComparison(id, dimension, startTimestamp, endTimestamp) {
+    // var values = [];
+    // let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+    /* this.getData(id)
+      .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
+      .forEach(data => {
+        var value;
+ 
+        if (data.hasOwnProperty('value')) {
+          value = data.value;
+        } else {
+          var firstValue = data.values[0];
+          if (firstValue instanceof Array) {
+            value = firstValue[dimension];
+          } else {
+            value = data.values[dimension];
+          }
+        }
+ 
+        values.push(value);
+      }); */
+    return this.getData(id)
+      .filter(data => data.aggregationTimestamp > startTimestamp && data.aggregationTimestamp < endTimestamp)
+      .map(data => {
+        let value;
+        if (data.hasOwnProperty('value')) {
+          value = data.value;
+        } else {
+          const firstValue = data.values[0];
+          if (firstValue instanceof Array) {
+            value = firstValue[dimension];
+          } else {
+            value = data.values[dimension];
+          }
+        }
+        return value;
+      });
+    // return values;
+  }
+
   getDataTimestamps(id) {
     let timestamps = [];
     let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
