@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { Row } from 'react-materialize';
+import { Row, Button, Modal } from 'react-materialize';
 import M from "materialize-css";
 import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
@@ -196,6 +196,11 @@ function App() {
         </Row>
         {/* <ModalView /> */}
       </div>
+      <Modal
+        header='Welcome to the Seamless.me Demo Dashboard'
+        trigger={<Button>OPEN WELCOME MODAL</Button>}>
+        Please pick up the device to start recording the data
+        </Modal>
     </div>
   );
 }
