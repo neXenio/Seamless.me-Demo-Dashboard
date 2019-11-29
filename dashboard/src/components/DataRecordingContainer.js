@@ -83,7 +83,6 @@ class DataRecordingContainer {
     // return values;
   }
 
-  // !
   getDataValuesInDimensionForComparison(id, dimension, startTimestamp, endTimestamp) {
     return this.getData(id)
       .filter(data => data.aggregationTimestamp > startTimestamp && data.aggregationTimestamp < endTimestamp)
