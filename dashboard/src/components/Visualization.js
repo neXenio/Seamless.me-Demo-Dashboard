@@ -186,7 +186,8 @@ const Visualization = (props) => {
         let xValuesC = [];
         let yValuesC = [];
         for (let dimension = 0; dimension < dimensionsC; dimension++) {
-          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
+          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, startTimestampC, endTimestampC);
+          // let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
           xValuesC.push(delaysC);
           yValuesC.push(valuesInDimenionC);
         }
