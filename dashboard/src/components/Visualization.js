@@ -200,7 +200,7 @@ const Visualization = (props) => {
         console.log("Start: " + startTimestampC);
         console.log("End: " + endTimestampC);
 
-        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
+        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC));
         Plotly.restyle('second-chart-plot-container', dataUpdateC)
       }
     }
