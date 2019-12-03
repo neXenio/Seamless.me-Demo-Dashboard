@@ -174,19 +174,19 @@ const Visualization = (props) => {
         var endTimestampC;
 
         if (endTimestampValue.current) {
-          endTimestampC = endTimestampValue.current
+          endTimestampC = endTimestampValue.current;
         } else {
           endTimestampC = Date.now() - timestampOffset;
         }
 
-        let startTimestampC = startTimestampValue.current - COMPARISON_CHART_PLOT_DURATION;
+        let startTimestampC = endTimestampC - CHART_PLOT_DURATION;
         let durationC = endTimestampC - startTimestampC;
         let delaysC = timestampsC.map(timestamp => (timestamp - endTimestampC));
 
         let xValuesC = [];
         let yValuesC = [];
         for (let dimension = 0; dimension < dimensionsC; dimension++) {
-          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, startTimestampC, endTimestampC);
+          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, startTimestampValue.current, endTimestampC);
           // let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
           xValuesC.push(delaysC);
           yValuesC.push(valuesInDimenionC);
@@ -201,7 +201,7 @@ const Visualization = (props) => {
         console.log("End: " + endTimestampC);
 
         Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
-        Plotly.restyle('second-chart-plot-container', dataUpdateC)
+        Plotly.restyle('second-chart-plot-container', dataUpdateC);
       }
     }
   }
@@ -214,7 +214,7 @@ const Visualization = (props) => {
 
   function stopNewDataVisualisation() {
     endTimestampValue.current = Date.now();
-    newDataVisualisationStatus.current = false;
+    // newDataVisualisationStatus.current = false;
   }
 
 
