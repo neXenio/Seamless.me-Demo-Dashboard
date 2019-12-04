@@ -321,8 +321,6 @@ const Visualization = (props) => {
           <Plot
             divId="chart-plot-container"
           />
-        </CollapsibleItem>
-        <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
           <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
             Start recording P1
           </Button>
@@ -332,7 +330,8 @@ const Visualization = (props) => {
           <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
             Stop recording
           </Button>
-
+        </CollapsibleItem>
+        <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
           <Plot
             divId="second-chart-plot-container"
           />
