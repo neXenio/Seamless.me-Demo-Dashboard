@@ -203,9 +203,11 @@ function App() {
       </div>
       <Modal
         header='Welcome to the Seamless.me Demo Dashboard'
-        trigger={<Button>OPEN WELCOME MODAL</Button>}>
-        Please pick up the device to start recording the data
-        </Modal>
+        open={true} >
+        <p>
+          Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.
+        </p>
+      </Modal>
     </div>
   );
 }
