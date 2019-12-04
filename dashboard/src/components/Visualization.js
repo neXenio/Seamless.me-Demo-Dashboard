@@ -15,8 +15,8 @@ const Visualization = (props) => {
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
-  const recreateComparisonChartPlot = useRef(true);
-  const newDataVisualisationStatus = useRef();
+  const recreateComparisonChartPlot = useRef(false);
+  const recordFirstWalkingData = useRef(false);
 
   const walkingStartTimestamp = useRef();
   const walkingEndTimestamp = useRef();
@@ -38,6 +38,10 @@ const Visualization = (props) => {
     let renderingStartTimestamp = Date.now();
 
     updateChartPlot();
+
+    if (recordFirstWalkingData) {
+      updateSecondChartPlot();
+    }
 
     let renderingDuration = Date.now() - renderingStartTimestamp;
     if (renderingDuration > RENDERING_INTERVAL) {
@@ -75,7 +79,7 @@ const Visualization = (props) => {
     }
     let layout = createChartPlotLayout(dimensions, 1);
 
-    if (newDataVisualisationStatus.current) {
+    if (recreateComparisonChartPlot.current) {
       Plotly.newPlot('second-chart-plot-container', traces, layout);
       recreateComparisonChartPlot.current = false;
     } else {
@@ -166,72 +170,69 @@ const Visualization = (props) => {
     } else {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('chart-plot-container', dataUpdate)
+    }
+  }
 
-      // UPDATING THE COMPARISON CHART
-      if (newDataVisualisationStatus.current === true) {
-        let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
+  function updateSecondChartPlot() {
+    let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
-        var dataStartTimestamp;
-        var dataEndTimestamp;
-        var chartEndTimestamp;
+    var dataStartTimestamp;
+    var dataEndTimestamp;
+    var chartEndTimestamp;
 
-        if (walkingEndTimestamp.current) {
-          chartEndTimestamp = walkingEndTimestamp.current;
-        } else {
-          chartEndTimestamp = Date.now() - props.timestampOffset;
-        }
+    if (walkingEndTimestamp.current) {
+      chartEndTimestamp = walkingEndTimestamp.current;
+    } else {
+      chartEndTimestamp = Date.now() - props.timestampOffset;
+    }
 
-        let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
+    let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
 
-        if (walkingEndTimestamp.current) {
-          dataEndTimestamp = walkingEndTimestamp.current;
-        } else {
-          dataEndTimestamp = chartEndTimestamp;
-        }
+    if (walkingEndTimestamp.current) {
+      dataEndTimestamp = walkingEndTimestamp.current;
+    } else {
+      dataEndTimestamp = chartEndTimestamp;
+    }
 
+    dataStartTimestamp = Math.max(walkingStartTimestamp.current, chartStartTimestamp);
 
+    let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
+    let duration = chartEndTimestamp - chartStartTimestamp;
+    let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
 
-        dataStartTimestamp = Math.max(walkingStartTimestamp.current, chartStartTimestamp);
+    let xValues = [];
+    let yValues = [];
+    for (let dimension = 0; dimension < dimensions; dimension++) {
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
+      xValues.push(delays);
+      yValues.push(valuesInDimenion);
+    }
 
-        let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
-        let duration = chartEndTimestamp - chartStartTimestamp;
-        let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
+    let dataUpdate = {
+      x: xValues,
+      y: yValues
+    }
 
-        let xValues = [];
-        let yValues = [];
-        for (let dimension = 0; dimension < dimensions; dimension++) {
-          let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
-          xValues.push(delays);
-          yValues.push(valuesInDimenion);
-        }
+    console.log("Start: " + walkingStartTimestamp.current);
+    console.log("End: " + walkingEndTimestamp.current);
 
-        let dataUpdate = {
-          x: xValues,
-          y: yValues
-        }
-
-        console.log("Start: " + walkingStartTimestamp.current);
-        console.log("End: " + walkingEndTimestamp.current);
-
-        if (recreateComparisonChartPlot.current) {
-          createChartPlot(dimensions);
-        } else {
-          Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
-          Plotly.restyle('second-chart-plot-container', dataUpdate);
-        }
-      }
+    if (recreateComparisonChartPlot.current) {
+      createChartPlot(dimensions);
+    } else {
+      Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
+      Plotly.restyle('second-chart-plot-container', dataUpdate);
     }
   }
 
   function startNewDataVisualisation() {
     walkingStartTimestamp.current = Date.now() - props.timestampOffset;
-    newDataVisualisationStatus.current = true;
+    recordFirstWalkingData.current = true;
     recreateComparisonChartPlot.current = true;
   }
 
   function stopNewDataVisualisation() {
     walkingEndTimestamp.current = Date.now() - props.timestampOffset;
-    newDataVisualisationStatus.current = false;
+    recordFirstWalkingData.current = false;
   }
 
 
