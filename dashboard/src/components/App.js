@@ -3,7 +3,7 @@
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { Row, Button, Modal } from 'react-materialize';
 import M from "materialize-css";
