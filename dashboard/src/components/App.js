@@ -30,11 +30,12 @@ let selectedDevice;
 
 function App() {
 
+  // const [statusText, updateStatusText] = useState('');
   const [timestampOffset, updateTimestampOffset] = useState(0);
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
-  const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [selectedDataId, updateSelectedDataId] = useState('');
 
 
   useEffect(() => {
@@ -111,7 +112,7 @@ function App() {
     });
 
 
-    // updateStatusText('Processing partial data recording with ' + delay + 'ms delay')
+    // updateStatusText('Processing partial data recording with ' + delay + 'ms delay');
 
     partialDataRecordingContainer.recordings.forEach(function (dataRecording) {
       if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
@@ -193,7 +194,7 @@ function App() {
     <div className="section">
       <Logo />
       <div className="row">
-        <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} />
+        <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} /* statusText={statusText} */ />
         <Row>
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />

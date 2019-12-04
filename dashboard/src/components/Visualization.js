@@ -34,7 +34,7 @@ const Visualization = (props) => {
       return () => clearInterval(intervalID);
     },
     // eslint-disable-next-line 
-    [props.selectedDataId, props.timestampOffset]
+    [props.selectedDataId, props.timestampOffset /*, props.statusText */]
   )
 
 
@@ -317,7 +317,7 @@ const Visualization = (props) => {
 
     <Col m={12} s={12} l={0} offset="s0, m0, l0">
       <Collapsible accordion={false} className="col s12 m12 l8 offset-s0 offset-m0 offset-l2">
-        <CollapsibleItem header="Multiple Charts" icon={<Icon>show_chart</Icon>}>
+        <CollapsibleItem header="Main Chart" icon={<Icon>show_chart</Icon>}>
           <Plot
             divId="chart-plot-container"
           />
@@ -331,7 +331,7 @@ const Visualization = (props) => {
             Stop recording
           </Button>
         </CollapsibleItem>
-        <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
+        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
           <Plot
             divId="second-chart-plot-container"
           />
@@ -340,7 +340,7 @@ const Visualization = (props) => {
           />
         </CollapsibleItem>
         <CollapsibleItem header="Meta Data" icon={<Icon>info</Icon>}>
-          <p id="statusText" className="center">Status Text</p>
+          {/* <p id="statusText" className="center">{props.statusText}}</p> */}
         </CollapsibleItem>
       </Collapsible>
     </Col>
