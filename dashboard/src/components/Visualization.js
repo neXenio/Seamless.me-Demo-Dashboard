@@ -6,7 +6,7 @@ import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materiali
 
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
-const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
+// const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 let timestampOffset = 0;
