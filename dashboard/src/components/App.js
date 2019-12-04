@@ -3,7 +3,7 @@
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import { Row, Button, Modal } from 'react-materialize';
 import M from "materialize-css";
@@ -26,11 +26,11 @@ const DELAY_LIMIT = 1000;
 
 let socket;
 let selectedDevice;
-let timestampOffset = 0;
 
 
 function App() {
 
+  const [timestampOffset, updateTimestampOffset] = useState(0);
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
@@ -102,10 +102,14 @@ function App() {
     }
 
     let delay = Date.now() - partialDataRecordingContainer.endTimestamp;
-    if (Math.abs(timestampOffset - delay) > DELAY_LIMIT) {
-      timestampOffset = delay - DELAY_LIMIT;
-      console.log("Updated timestamp offset to " + timestampOffset);
-    }
+    updateTimestampOffset((oldTimestampOffset) => {
+      if (Math.abs(oldTimestampOffset - delay) > DELAY_LIMIT) {
+        console.log("Updated timestamp offset to " + (delay - DELAY_LIMIT));
+        return delay - DELAY_LIMIT;
+      }
+      return oldTimestampOffset;
+    });
+
 
     // updateStatusText('Processing partial data recording with ' + delay + 'ms delay')
 
@@ -123,7 +127,7 @@ function App() {
     // update the connected devices array, place the new device first
     updateConnectedDeviceList((oldConnectedDeviceList) => {
       /* var connectionStatus = true;
-
+  
       oldConnectedDeviceList.forEach(function (oldDevice) {
           if (oldDevice.id === device.id) {
             connectionStatus = false;
@@ -189,7 +193,7 @@ function App() {
     <div className="section">
       <Logo />
       <div className="row">
-        <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} />
+        <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} />
         <Row>
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />

@@ -5,11 +5,10 @@ import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materiali
 
 
 // CHART
-const CHART_PLOT_DURATION = 30 * 1000;
+const CHART_PLOT_DURATION = 20 * 1000;
 // const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
-let timestampOffset = 0;
 const Plot = createPlotlyComponent(Plotly);
 
 const Visualization = (props) => {
@@ -28,7 +27,7 @@ const Visualization = (props) => {
       return () => clearInterval(intervalID);
     },
     // eslint-disable-next-line 
-    [props.selectedDataId]
+    [props.selectedDataId, props.timestampOffset]
   )
 
 
@@ -76,10 +75,10 @@ const Visualization = (props) => {
     let layout = createChartPlotLayout(dimensions, 1);
 
     if (newDataVisualisationStatus.current) {
-      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
+      Plotly.newPlot('second-chart-plot-container', traces, layout);
       recreateComparisonChartPlot.current = false;
     } else {
-      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
+      Plotly.newPlot('chart-plot-container', traces, layout);
       recreateChartPlot.current = false;
     }
   }
@@ -143,7 +142,7 @@ const Visualization = (props) => {
     let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
     let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
-    let endTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+    let endTimestamp = Date.now() - MINIMUM_DATA_AGE - props.timestampOffset;
     let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
     let duration = endTimestamp - startTimestamp;
     let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
@@ -177,7 +176,7 @@ const Visualization = (props) => {
         if (endTimestampValue.current) {
           endTimestampC = endTimestampValue.current;
         } else {
-          endTimestampC = Date.now() - timestampOffset;
+          endTimestampC = Date.now() - props.timestampOffset;
         }
 
         let startTimestampC = endTimestampC - CHART_PLOT_DURATION;
@@ -198,7 +197,7 @@ const Visualization = (props) => {
           y: yValuesC
         }
 
-        console.log("Start: " + startTimestampC);
+        console.log("Start: " + startTimestampValue.current);
         console.log("End: " + endTimestampC);
 
         if (recreateComparisonChartPlot.current) {
