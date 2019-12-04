@@ -16,6 +16,7 @@ const Visualization = (props) => {
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
+  const recreateComparisonChartPlot = useRef(true);
   const newDataVisualisationStatus = useRef();
   const startTimestampValue = useRef();
   const endTimestampValue = useRef();
@@ -74,13 +75,13 @@ const Visualization = (props) => {
     }
     let layout = createChartPlotLayout(dimensions, 1);
 
-    Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
-
     if (newDataVisualisationStatus.current) {
       Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
+      recreateComparisonChartPlot.current = false;
+    } else {
+      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
+      recreateChartPlot.current = false;
     }
-
-    recreateChartPlot.current = false;
   }
 
   function createChartPlotLayout(dimensions, duration) {
@@ -200,8 +201,12 @@ const Visualization = (props) => {
         console.log("Start: " + startTimestampC);
         console.log("End: " + endTimestampC);
 
-        Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
-        Plotly.restyle('second-chart-plot-container', dataUpdateC);
+        if (recreateComparisonChartPlot.current) {
+          createChartPlot(dimensionsC);
+        } else {
+          Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
+          Plotly.restyle('second-chart-plot-container', dataUpdateC);
+        }
       }
     }
   }
@@ -209,7 +214,7 @@ const Visualization = (props) => {
   function startNewDataVisualisation() {
     startTimestampValue.current = Date.now();
     newDataVisualisationStatus.current = true;
-    recreateChartPlot.current = true;
+    recreateComparisonChartPlot.current = true;
   }
 
   function stopNewDataVisualisation() {
