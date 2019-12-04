@@ -179,7 +179,7 @@ const Visualization = (props) => {
       y: yValues
     }
 
-    if (recreateChartPlot.current) {
+    if (recreateChartPlot.current === true) {
       createChartPlot(dimensions);
     } else {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
