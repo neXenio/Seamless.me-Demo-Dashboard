@@ -15,11 +15,17 @@ const Visualization = (props) => {
   // eslint-disable-next-line
   const [dataRecordingContainerState, updateDataRecordingContainer] = useState(props.dataRecordingContainer);
   const recreateChartPlot = useRef(true);
-  const recreateComparisonChartPlot = useRef(false);
-  const recordFirstWalkingData = useRef(false);
+  const recreateSecondChartPlot = useRef(false);
+  const recreateThirdChartPlot = useRef(false);
 
-  const walkingStartTimestamp = useRef();
-  const walkingEndTimestamp = useRef();
+  const recordFirstWalkingData = useRef(false);
+  const recordSecondWalkingData = useRef(false);
+
+  const firstWalkingStartTimestamp = useRef();
+  const firstWalkingEndTimestamp = useRef();
+
+  const secondWalkingStartTimestamp = useRef();
+  const secondWalkingEndTimestamp = useRef();
 
 
   useEffect(
@@ -39,8 +45,12 @@ const Visualization = (props) => {
 
     updateChartPlot();
 
-    if (recordFirstWalkingData) {
+    if (recordFirstWalkingData.current === true) {
       updateSecondChartPlot();
+    }
+
+    if (recordSecondWalkingData.current === true) {
+      updateThirdChartPlot();
     }
 
     let renderingDuration = Date.now() - renderingStartTimestamp;
@@ -79,9 +89,13 @@ const Visualization = (props) => {
     }
     let layout = createChartPlotLayout(dimensions, 1);
 
-    if (recreateComparisonChartPlot.current) {
+    if (recreateSecondChartPlot.current === true) {
       Plotly.newPlot('second-chart-plot-container', traces, layout);
-      recreateComparisonChartPlot.current = false;
+      recreateSecondChartPlot.current = false;
+    }
+    if (recreateThirdChartPlot.current === true) {
+      Plotly.newPlot('third-chart-plot-container', traces, layout);
+      recreateThirdChartPlot.current = false;
     } else {
       Plotly.newPlot('chart-plot-container', traces, layout);
       recreateChartPlot.current = false;
@@ -180,21 +194,21 @@ const Visualization = (props) => {
     var dataEndTimestamp;
     var chartEndTimestamp;
 
-    if (walkingEndTimestamp.current) {
-      chartEndTimestamp = walkingEndTimestamp.current;
+    if (firstWalkingEndTimestamp.current) {
+      chartEndTimestamp = firstWalkingEndTimestamp.current;
     } else {
       chartEndTimestamp = Date.now() - props.timestampOffset;
     }
 
     let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
 
-    if (walkingEndTimestamp.current) {
-      dataEndTimestamp = walkingEndTimestamp.current;
+    if (firstWalkingEndTimestamp.current) {
+      dataEndTimestamp = firstWalkingEndTimestamp.current;
     } else {
       dataEndTimestamp = chartEndTimestamp;
     }
 
-    dataStartTimestamp = Math.max(walkingStartTimestamp.current, chartStartTimestamp);
+    dataStartTimestamp = Math.max(firstWalkingStartTimestamp.current, chartStartTimestamp);
 
     let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
     let duration = chartEndTimestamp - chartStartTimestamp;
@@ -213,10 +227,10 @@ const Visualization = (props) => {
       y: yValues
     }
 
-    console.log("Start: " + walkingStartTimestamp.current);
-    console.log("End: " + walkingEndTimestamp.current);
+    // console.log("Start: " + firstWalkingStartTimestamp.current);
+    // console.log("End: " + firstWalkingEndTimestamp.current);
 
-    if (recreateComparisonChartPlot.current) {
+    if (recreateSecondChartPlot.current === true) {
       createChartPlot(dimensions);
     } else {
       Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
@@ -224,15 +238,78 @@ const Visualization = (props) => {
     }
   }
 
-  function startNewDataVisualisation() {
-    walkingStartTimestamp.current = Date.now() - props.timestampOffset;
-    recordFirstWalkingData.current = true;
-    recreateComparisonChartPlot.current = true;
+  function updateThirdChartPlot() {
+    let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
+
+    var dataStartTimestamp;
+    var dataEndTimestamp;
+    var chartEndTimestamp;
+
+    if (secondWalkingEndTimestamp.current) {
+      chartEndTimestamp = secondWalkingEndTimestamp.current;
+    } else {
+      chartEndTimestamp = Date.now() - props.timestampOffset;
+    }
+
+    let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
+
+    if (secondWalkingEndTimestamp.current) {
+      dataEndTimestamp = secondWalkingEndTimestamp.current;
+    } else {
+      dataEndTimestamp = chartEndTimestamp;
+    }
+
+    dataStartTimestamp = Math.max(secondWalkingStartTimestamp.current, chartStartTimestamp);
+
+    let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
+    let duration = chartEndTimestamp - chartStartTimestamp;
+    let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
+
+    let xValues = [];
+    let yValues = [];
+    for (let dimension = 0; dimension < dimensions; dimension++) {
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
+      xValues.push(delays);
+      yValues.push(valuesInDimenion);
+    }
+
+    let dataUpdate = {
+      x: xValues,
+      y: yValues
+    }
+
+    // console.log("Start: " + secondWalkingStartTimestamp.current);
+    // console.log("End: " + secondWalkingEndTimestamp.current);
+
+    if (recreateThirdChartPlot.current === true) {
+      createChartPlot(dimensions);
+    } else {
+      Plotly.relayout('third-chart-plot-container', createChartPlotLayout(dimensions, duration));
+      Plotly.restyle('third-chart-plot-container', dataUpdate);
+    }
   }
 
-  function stopNewDataVisualisation() {
-    walkingEndTimestamp.current = Date.now() - props.timestampOffset;
+  // START & STOP OF SECOND PLOT
+  function startSecondDataVisualisation() {
+    firstWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
+    recordFirstWalkingData.current = true;
+    recreateSecondChartPlot.current = true;
+  }
+
+  function stopSecondDataVisualisation() {
+    firstWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = false;
+
+
+    // SECOND
+    secondWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
+    recordSecondWalkingData.current = true;
+    recreateThirdChartPlot.current = true;
+  }
+
+  function stopThirdDataVisualisation() {
+    secondWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
+    recordSecondWalkingData.current = false;
   }
 
 
@@ -244,18 +321,24 @@ const Visualization = (props) => {
           <Plot
             divId="chart-plot-container"
           />
-          <Button waves="light" style={{ marginRight: '5px' }} onClick={startNewDataVisualisation}>
-            Start comparing
+        </CollapsibleItem>
+        <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
+          <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
+            Start recording P1
           </Button>
-          <Button waves="light" style={{ marginRight: '5px' }} onClick={stopNewDataVisualisation}>
-            Stop comparing
+          <Button waves="light" style={{ marginRight: '2px' }} onClick={stopSecondDataVisualisation}>
+            Switch to P2
           </Button>
+          <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
+            Stop recording
+          </Button>
+
           <Plot
             divId="second-chart-plot-container"
           />
-        </CollapsibleItem>
-        <CollapsibleItem header="Stacked Chart" icon={<Icon>scatter_plot</Icon>}>
-          Lorem ipsum dolor sit amet.
+          <Plot
+            divId="third-chart-plot-container"
+          />
         </CollapsibleItem>
         <CollapsibleItem header="Meta Data" icon={<Icon>info</Icon>}>
           <p id="statusText" className="center">Status Text</p>
