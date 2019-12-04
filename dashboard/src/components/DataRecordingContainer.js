@@ -111,6 +111,15 @@ class DataRecordingContainer {
     return timestamps;
   }
 
+  getDataTimestampsForComparison(id, startTimestamp, endTimestamp) {
+    let timestamps = [];
+    // let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+    this.getData(id)
+      .filter(data => data.aggregationTimestamp > startTimestamp && data.aggregationTimestamp < endTimestamp)
+      .forEach(data => timestamps.push(data.aggregationTimestamp));
+    return timestamps;
+  }
+
   getDimensions(id) {
     let data = this.getData(id);
     if (data.length === 0) {

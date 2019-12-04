@@ -6,7 +6,7 @@ import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materiali
 
 // CHART
 const CHART_PLOT_DURATION = 20 * 1000;
-// const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
+const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 const Plot = createPlotlyComponent(Plotly);
@@ -17,8 +17,9 @@ const Visualization = (props) => {
   const recreateChartPlot = useRef(true);
   const recreateComparisonChartPlot = useRef(true);
   const newDataVisualisationStatus = useRef();
-  const startTimestampValue = useRef();
-  const endTimestampValue = useRef();
+
+  const walkingStartTimestamp = useRef();
+  const walkingEndTimestamp = useRef();
 
 
   useEffect(
@@ -168,57 +169,69 @@ const Visualization = (props) => {
 
       // UPDATING THE COMPARISON CHART
       if (newDataVisualisationStatus.current === true) {
-        let dimensionsC = dataRecordingContainerState.getDimensions(props.selectedDataId);
+        let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
-        let timestampsC = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
-        var endTimestampC;
+        var dataStartTimestamp;
+        var dataEndTimestamp;
+        var chartEndTimestamp;
 
-        if (endTimestampValue.current) {
-          endTimestampC = endTimestampValue.current;
+        if (walkingEndTimestamp.current) {
+          chartEndTimestamp = walkingEndTimestamp.current;
         } else {
-          endTimestampC = Date.now() - props.timestampOffset;
+          chartEndTimestamp = Date.now() - props.timestampOffset;
         }
 
-        let startTimestampC = endTimestampC - CHART_PLOT_DURATION;
-        let durationC = endTimestampC - startTimestampC;
-        let delaysC = timestampsC.map(timestamp => (timestamp - endTimestampC));
+        let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
 
-        let xValuesC = [];
-        let yValuesC = [];
-        for (let dimension = 0; dimension < dimensionsC; dimension++) {
-          let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, startTimestampValue.current, endTimestampC);
-          // let valuesInDimenionC = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
-          xValuesC.push(delaysC);
-          yValuesC.push(valuesInDimenionC);
+        if (walkingEndTimestamp.current) {
+          dataEndTimestamp = walkingEndTimestamp.current;
+        } else {
+          dataEndTimestamp = chartEndTimestamp;
         }
 
-        let dataUpdateC = {
-          x: xValuesC,
-          y: yValuesC
+
+
+        dataStartTimestamp = Math.max(walkingStartTimestamp.current, chartStartTimestamp);
+
+        let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
+        let duration = chartEndTimestamp - chartStartTimestamp;
+        let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
+
+        let xValues = [];
+        let yValues = [];
+        for (let dimension = 0; dimension < dimensions; dimension++) {
+          let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
+          xValues.push(delays);
+          yValues.push(valuesInDimenion);
         }
 
-        console.log("Start: " + startTimestampValue.current);
-        console.log("End: " + endTimestampC);
+        let dataUpdate = {
+          x: xValues,
+          y: yValues
+        }
+
+        console.log("Start: " + walkingStartTimestamp.current);
+        console.log("End: " + walkingEndTimestamp.current);
 
         if (recreateComparisonChartPlot.current) {
-          createChartPlot(dimensionsC);
+          createChartPlot(dimensions);
         } else {
-          Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensionsC, durationC));
-          Plotly.restyle('second-chart-plot-container', dataUpdateC);
+          Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
+          Plotly.restyle('second-chart-plot-container', dataUpdate);
         }
       }
     }
   }
 
   function startNewDataVisualisation() {
-    startTimestampValue.current = Date.now();
+    walkingStartTimestamp.current = Date.now() - props.timestampOffset;
     newDataVisualisationStatus.current = true;
     recreateComparisonChartPlot.current = true;
   }
 
   function stopNewDataVisualisation() {
-    endTimestampValue.current = Date.now();
-    // newDataVisualisationStatus.current = false;
+    walkingEndTimestamp.current = Date.now() - props.timestampOffset;
+    newDataVisualisationStatus.current = false;
   }
 
 
