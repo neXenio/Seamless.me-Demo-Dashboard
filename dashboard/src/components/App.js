@@ -3,9 +3,9 @@
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
-import { Row, Modal } from 'react-materialize';
+import { Row, Modal, Button } from 'react-materialize';
 import M from "materialize-css";
 import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
@@ -36,6 +36,8 @@ function App() {
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [openModal, updateOpenModal] = useState(true);
+  const modalText = useRef('Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.');
 
 
   useEffect(() => {
@@ -181,6 +183,8 @@ function App() {
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
+
+    updateOpenModal(true);
   }
 
   function handleDataChange(event) {
@@ -188,7 +192,6 @@ function App() {
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
   }
-
 
   return (
     <div className="section">
@@ -203,9 +206,9 @@ function App() {
       </div>
       <Modal
         header='Welcome to the Seamless.me Demo Dashboard'
-        open={true} >
+        open={openModal} >
         <p>
-          Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.
+          {modalText.current}
         </p>
       </Modal>
     </div>
