@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
-import { Row, Modal, Button } from 'react-materialize';
+import { Row, Modal } from 'react-materialize';
 import M from "materialize-css";
 import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
