@@ -36,7 +36,8 @@ function App() {
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
-  const [openModal, updateOpenModal] = useState(true);
+  const [openModal, updateOpenModal] = useState(false);
+  const modalHeader = useRef('Welcome to the Seamless.me Demo Dashboard');
   const modalText = useRef('Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.');
 
 
@@ -204,8 +205,21 @@ function App() {
         </Row>
       </div>
       <Modal
-        header='Welcome to the Seamless.me Demo Dashboard'
-        open={openModal} >
+        header={modalHeader.current}
+        open={openModal}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }} >
         <p>
           {modalText.current}
         </p>
