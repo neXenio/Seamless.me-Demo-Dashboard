@@ -90,14 +90,14 @@ const Visualization = (props) => {
     let layout = createChartPlotLayout(dimensions, 1);
 
     if (recreateSecondChartPlot.current === true) {
-      Plotly.newPlot('second-chart-plot-container', traces, layout);
+      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
       recreateSecondChartPlot.current = false;
     }
     if (recreateThirdChartPlot.current === true) {
-      Plotly.newPlot('third-chart-plot-container', traces, layout);
+      Plotly.newPlot('third-chart-plot-container', traces, layout, { responsive: true });
       recreateThirdChartPlot.current = false;
     } else {
-      Plotly.newPlot('chart-plot-container', traces, layout);
+      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
       recreateChartPlot.current = false;
     }
   }
@@ -321,6 +321,8 @@ const Visualization = (props) => {
           <Plot
             divId="chart-plot-container"
           />
+        </CollapsibleItem>
+        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
           <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
             Start recording P1
           </Button>
@@ -330,8 +332,6 @@ const Visualization = (props) => {
           <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
             Stop recording
           </Button>
-        </CollapsibleItem>
-        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
           <Plot
             divId="second-chart-plot-container"
           />
