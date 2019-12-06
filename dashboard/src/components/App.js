@@ -202,7 +202,6 @@ function App() {
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />
         </Row>
-        {/* <ModalView /> */}
       </div>
       <Modal
         header='Welcome to the Seamless.me Demo Dashboard'
