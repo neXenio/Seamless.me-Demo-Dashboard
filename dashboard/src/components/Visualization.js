@@ -5,7 +5,7 @@ import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materiali
 
 
 // CHART
-const CHART_PLOT_DURATION = 20 * 1000;
+const CHART_PLOT_DURATION = 30 * 1000;
 const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
@@ -296,7 +296,7 @@ const Visualization = (props) => {
     recreateSecondChartPlot.current = true;
   }
 
-  function stopSecondDataVisualisation() {
+  function switchToSecondDataVisualisation() {
     firstWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = false;
 
@@ -321,17 +321,17 @@ const Visualization = (props) => {
           <Plot
             divId="chart-plot-container"
           />
+        </CollapsibleItem>
+        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
           <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
-            Start recording P1
+            Start recording
           </Button>
-          <Button waves="light" style={{ marginRight: '2px' }} onClick={stopSecondDataVisualisation}>
-            Switch to P2
+          <Button waves="light" style={{ marginRight: '2px' }} onClick={switchToSecondDataVisualisation}>
+            Switch
           </Button>
           <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
             Stop recording
           </Button>
-        </CollapsibleItem>
-        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
           <Plot
             divId="second-chart-plot-container"
           />

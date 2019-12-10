@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { Row, Modal } from 'react-materialize';
+import { Row } from 'react-materialize';
 import M from "materialize-css";
 import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
@@ -35,7 +35,7 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
-  const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [selectedDataId, updateSelectedDataId] = useState('');
 
 
   useEffect(() => {
@@ -199,15 +199,7 @@ function App() {
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />
         </Row>
-        {/* <ModalView /> */}
       </div>
-      <Modal
-        header='Welcome to the Seamless.me Demo Dashboard'
-        open={true} >
-        <p>
-          Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.
-        </p>
-      </Modal>
     </div>
   );
 }
