@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import createPlotlyComponent from 'react-plotly.js/factory'
 import Plotly from 'plotly.js';
-import { Col, Collapsible, CollapsibleItem, Icon, Button } from 'react-materialize';
+import { Col, Button, Card } from 'react-materialize';
 
 
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
-const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
+const COMPARISON_CHART_PLOT_DURATION = 15 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 const Plot = createPlotlyComponent(Plotly);
@@ -314,36 +314,47 @@ const Visualization = (props) => {
 
 
   return (
+    <div>
 
-    <Col m={12} s={12} l={0} offset="s0, m0, l0">
-      <Collapsible accordion={false} className="col s12 m12 l8 offset-s0 offset-m0 offset-l2">
-        <CollapsibleItem header="Main Chart" icon={<Icon>show_chart</Icon>}>
+      <Col m={12} s={12} l={8} offset="s0, m0, l2">
+        <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
+          Start recording
+          </Button>
+        <Button waves="light" style={{ marginRight: '2px' }} onClick={switchToSecondDataVisualisation}>
+          Switch
+          </Button>
+        <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
+          Stop recording
+          </Button>
+      </Col>
+
+      <Col m={12} s={12} l={8} offset="s0, m0, l2">
+        <Card>
           <Plot
             divId="chart-plot-container"
           />
-        </CollapsibleItem>
-        <CollapsibleItem header="Compare Charts" icon={<Icon>compare</Icon>}>
-          <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
-            Start recording
-          </Button>
-          <Button waves="light" style={{ marginRight: '2px' }} onClick={switchToSecondDataVisualisation}>
-            Switch
-          </Button>
-          <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
-            Stop recording
-          </Button>
+        </Card>
+      </Col>
+
+      <Col m={6} s={12} l={4} offset="s0, m0, l2">
+        <Card>
           <Plot
             divId="second-chart-plot-container"
           />
+        </Card>
+      </Col>
+
+      <Col m={6} s={12} l={4} offset="s0, m0, l0">
+        <Card>
           <Plot
             divId="third-chart-plot-container"
           />
-        </CollapsibleItem>
-        <CollapsibleItem header="Meta Data" icon={<Icon>info</Icon>}>
-          {/* <p id="statusText" className="center">{props.statusText}}</p> */}
-        </CollapsibleItem>
-      </Collapsible>
-    </Col>
+        </Card>
+      </Col>
+
+      {/* <p id="statusText" className="center">{props.statusText}}</p> */}
+
+    </div >
   );
 }
 

@@ -12,7 +12,7 @@ import './App.css';
 
 // COMPONENTS
 import Logo from './Logo.js';
-import Info from './Info.js';
+// import Info from './Info.js';
 import Device from './Device.js';
 import Visualization from './Visualization.js';
 import DataRecordingContainer from './DataRecordingContainer.js';
@@ -35,7 +35,7 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
-  const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [selectedDataId, updateSelectedDataId] = useState();
 
 
   useEffect(() => {
@@ -185,10 +185,12 @@ function App() {
     <div className="section">
       <Logo />
       <div className="row">
-        <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} /* statusText={statusText} */ />
+        <Row>
+          <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} /* statusText={statusText} */ />
+        </Row>
         <Row>
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
-          <Info />
+          {/* <Info /> */}
         </Row>
       </div>
     </div>
