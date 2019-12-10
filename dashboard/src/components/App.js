@@ -5,7 +5,7 @@
 
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
-import { Row } from 'react-materialize';
+import { Row, Button, Icon, Modal, Col } from 'react-materialize';
 import M from "materialize-css";
 import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
@@ -185,11 +185,45 @@ function App() {
     <div className="section">
       <Logo />
       <div className="row">
+        <Col m={6} s={12} l={4} offset="s0, m0, l2">
+          <Modal
+            actions={[
+              <Button flat modal="close" node="button" waves="green">Close</Button>
+            ]}
+            bottomSheet={false}
+            fixedFooter={false}
+            id="modal-0"
+            options={{
+              dismissible: true,
+              endingTop: '10%',
+              inDuration: 250,
+              onCloseEnd: null,
+              onCloseStart: null,
+              onOpenEnd: null,
+              onOpenStart: null,
+              opacity: 0.5,
+              outDuration: 250,
+              preventScrolling: true,
+              startingTop: '4%'
+            }}
+            trigger={
+              <Button
+                node="button"
+                className="green"
+                floating
+                icon={<Icon>add</Icon>}
+                large
+                node="button"
+                waves="light"
+              />}
+          >
+            <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
+          </Modal>
+        </Col>
         <Row>
           <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} /* statusText={statusText} */ />
         </Row>
         <Row>
-          <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           {/* <Info /> */}
         </Row>
       </div>

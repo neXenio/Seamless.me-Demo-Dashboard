@@ -6,7 +6,7 @@ import { Col, Button, Card } from 'react-materialize';
 
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
-const COMPARISON_CHART_PLOT_DURATION = 10 * 1000;
+const COMPARISON_CHART_PLOT_DURATION = 15 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 const Plot = createPlotlyComponent(Plotly);
@@ -315,19 +315,6 @@ const Visualization = (props) => {
 
   return (
     <div>
-
-      <Col m={12} s={12} l={8} offset="s0, m0, l2">
-        <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
-          Start recording
-          </Button>
-        <Button waves="light" style={{ marginRight: '2px' }} onClick={switchToSecondDataVisualisation}>
-          Switch
-          </Button>
-        <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
-          Stop recording
-          </Button>
-      </Col>
-
       <Col m={12} s={12} l={8} offset="s0, m0, l2">
         <Card>
           <Plot
@@ -350,6 +337,18 @@ const Visualization = (props) => {
             divId="third-chart-plot-container"
           />
         </Card>
+      </Col>
+
+      <Col m={12} s={12} l={8} offset="s0, m0, l5">
+        <Button waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
+          Start recording
+          </Button>
+        <Button waves="light" style={{ marginRight: '50px' }} onClick={switchToSecondDataVisualisation}>
+          Switch
+          </Button>
+        <Button waves="light" style={{ marginRight: '50px' }} onClick={stopThirdDataVisualisation}>
+          Stop recording
+          </Button>
       </Col>
 
       {/* <p id="statusText" className="center">{props.statusText}}</p> */}
