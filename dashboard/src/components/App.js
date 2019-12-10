@@ -3,7 +3,7 @@
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import { Row, Modal } from 'react-materialize';
 import M from "materialize-css";
@@ -35,7 +35,14 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
+<<<<<<< HEAD
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [openModal, updateOpenModal] = useState(false);
+  const modalHeader = useRef('Welcome to the Seamless.me Demo Dashboard');
+  const modalText = useRef('Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.');
+=======
+  const [selectedDataId, updateSelectedDataId] = useState('');
+>>>>>>> parent of 4e4b66c... Add default data type id
 
 
   useEffect(() => {
@@ -181,6 +188,8 @@ function App() {
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
+
+    updateOpenModal(true);
   }
 
   function handleDataChange(event) {
@@ -188,7 +197,6 @@ function App() {
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
   }
-
 
   return (
     <div className="section">
@@ -199,13 +207,25 @@ function App() {
           <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           <Info />
         </Row>
-        {/* <ModalView /> */}
       </div>
       <Modal
-        header='Welcome to the Seamless.me Demo Dashboard'
-        open={true} >
+        header={modalHeader.current}
+        open={openModal}
+        options={{
+          dismissible: true,
+          endingTop: '10%',
+          inDuration: 250,
+          onCloseEnd: null,
+          onCloseStart: null,
+          onOpenEnd: null,
+          onOpenStart: null,
+          opacity: 0.5,
+          outDuration: 250,
+          preventScrolling: true,
+          startingTop: '4%'
+        }} >
         <p>
-          Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.
+          {modalText.current}
         </p>
       </Modal>
     </div>
