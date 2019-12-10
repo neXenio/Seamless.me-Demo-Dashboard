@@ -213,7 +213,6 @@ function App() {
                 floating
                 icon={<Icon>add</Icon>}
                 large
-                node="button"
                 waves="light"
               />}
           >
