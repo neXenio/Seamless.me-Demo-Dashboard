@@ -35,10 +35,14 @@ function App() {
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
+<<<<<<< HEAD
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
   const [openModal, updateOpenModal] = useState(false);
   const modalHeader = useRef('Welcome to the Seamless.me Demo Dashboard');
   const modalText = useRef('Please select a device and a data type. Feel free to compare two charts by interacting with the buttons in the main tap.');
+=======
+  const [selectedDataId, updateSelectedDataId] = useState('');
+>>>>>>> parent of 4e4b66c... Add default data type id
 
 
   useEffect(() => {
