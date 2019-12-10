@@ -18,6 +18,9 @@ const Visualization = (props) => {
   const recreateSecondChartPlot = useRef(false);
   const recreateThirdChartPlot = useRef(false);
 
+  const [showFirstWalkingPlot, updateShowFirstWalkingPlot] = useState(false);
+  const [showSecondWalkingPlot, updateShowSecondWalkingPlot] = useState(false);
+
   const recordFirstWalkingData = useRef(false);
   const recordSecondWalkingData = useRef(false);
 
@@ -294,6 +297,8 @@ const Visualization = (props) => {
     firstWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = true;
     recreateSecondChartPlot.current = true;
+
+    updateShowFirstWalkingPlot(!showFirstWalkingPlot);
   }
 
   function switchToSecondDataVisualisation() {
@@ -302,6 +307,7 @@ const Visualization = (props) => {
 
 
     // SECOND
+    updateShowSecondWalkingPlot(!showSecondWalkingPlot);
     secondWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordSecondWalkingData.current = true;
     recreateThirdChartPlot.current = true;
@@ -325,17 +331,13 @@ const Visualization = (props) => {
 
       <Col m={6} s={12} l={4} offset="s0, m0, l2">
         <Card>
-          <Plot
-            divId="second-chart-plot-container"
-          />
+          {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />}
         </Card>
       </Col>
 
       <Col m={6} s={12} l={4} offset="s0, m0, l0">
         <Card>
-          <Plot
-            divId="third-chart-plot-container"
-          />
+          {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />}
         </Card>
       </Col>
 

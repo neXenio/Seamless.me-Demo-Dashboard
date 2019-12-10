@@ -193,6 +193,7 @@ function App() {
             bottomSheet={false}
             fixedFooter={false}
             id="modal-0"
+            open
             options={{
               dismissible: true,
               endingTop: '10%',
