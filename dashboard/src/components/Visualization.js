@@ -296,7 +296,7 @@ const Visualization = (props) => {
     recreateSecondChartPlot.current = true;
   }
 
-  function stopSecondDataVisualisation() {
+  function switchToSecondDataVisualisation() {
     firstWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = false;
 
@@ -324,7 +324,7 @@ const Visualization = (props) => {
           <Button waves="light" style={{ marginRight: '2px' }} onClick={startSecondDataVisualisation}>
             Start recording P1
           </Button>
-          <Button waves="light" style={{ marginRight: '2px' }} onClick={stopSecondDataVisualisation}>
+          <Button waves="light" style={{ marginRight: '2px' }} onClick={switchToSecondDataVisualisation}>
             Switch to P2
           </Button>
           <Button waves="light" style={{ marginRight: '2px' }} onClick={stopThirdDataVisualisation}>
