@@ -230,8 +230,8 @@ const Visualization = (props) => {
       y: yValues
     }
 
-    // console.log("Start: " + firstWalkingStartTimestamp.current);
-    // console.log("End: " + firstWalkingEndTimestamp.current);
+    // console.log("Start-Second-Plot: " + firstWalkingStartTimestamp.current);
+    // console.log("End-Second-Plot: " + firstWalkingEndTimestamp.current);
 
     if (recreateSecondChartPlot.current === true) {
       createChartPlot(dimensions);
@@ -281,8 +281,8 @@ const Visualization = (props) => {
       y: yValues
     }
 
-    // console.log("Start: " + secondWalkingStartTimestamp.current);
-    // console.log("End: " + secondWalkingEndTimestamp.current);
+    // console.log("Start-Third-Plot: " + secondWalkingStartTimestamp.current);
+    // console.log("End-Third-Plot: " + secondWalkingEndTimestamp.current);
 
     if (recreateThirdChartPlot.current === true) {
       createChartPlot(dimensions);
