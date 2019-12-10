@@ -127,13 +127,6 @@ function App() {
 
     // update the connected devices array, place the new device first
     updateConnectedDeviceList((oldConnectedDeviceList) => {
-      /* var connectionStatus = true;
-  
-      oldConnectedDeviceList.forEach(function (oldDevice) {
-          if (oldDevice.id === device.id) {
-            connectionStatus = false;
-          }
-      }); */
 
       const connectionStatus = !oldConnectedDeviceList.some(oldDevice => oldDevice.id === device.id);
 
@@ -161,7 +154,6 @@ function App() {
       let optionText = DataRecordingContainer.getReadableId(id);
 
       updateDataList((oldDataList) => {
-        // return oldDataList.concat({id: optionValue, optionText: optionText});
         return [...oldDataList, {
           id,
           optionText
@@ -177,7 +169,6 @@ function App() {
     setupSocket();
 
     let selectedDeviceId = event.target.value;
-    // selectedDevice = connectedDevices.filter(connectedDevice => connectedDevice.id === selectedDeviceId)[0];
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
