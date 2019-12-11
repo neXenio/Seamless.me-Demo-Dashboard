@@ -30,16 +30,6 @@ const Visualization = (props) => {
   const secondWalkingStartTimestamp = useRef();
   const secondWalkingEndTimestamp = useRef();
 
-
-  useEffect(
-    () => {
-      const intervalID = window.setInterval(render, RENDERING_INTERVAL);
-      return () => clearInterval(intervalID);
-    },
-    // eslint-disable-next-line 
-    [props.selectedDataId, props.timestampOffset, /*props.statusText,*/ render, recreateChartPlot]
-  )
-
   const getChartMarkerColor = useCallback((dimension) => {
     const colors = ['#82C9C2', '#5D77A7', '#FF66FF']
     return colors[dimension % colors.length]
@@ -291,6 +281,14 @@ const Visualization = (props) => {
       // console.log('Rendering is too slow: ' + renderingDuration + 'ms');
     }
   }, [updateChartPlot, updateSecondChartPlot, updateThirdChartPlot]);
+
+  useEffect(
+    () => {
+      const intervalID = window.setInterval(render, RENDERING_INTERVAL);
+      return () => clearInterval(intervalID);
+    },
+    // eslint-disable-next-line 
+    [props.selectedDataId, props.timestampOffset, render, recreateChartPlot /*,props.statusText*/]);
 
   // START & STOP OF SECOND PLOT
   const startSecondDataVisualisation = useCallback(() => {

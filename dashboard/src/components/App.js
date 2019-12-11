@@ -90,7 +90,7 @@ function App() {
   }, [dataRecordingContainer]);
 
   const processDataRecordingContainer = useCallback((partialDataRecordingContainer) => {
-    if (typeof selectedDevice === undefined || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
+    if (!selectedDevice || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
       // console.log('Not processing data recording container from: ' + partialDataRecordingContainer.deviceInfo.id);
       return;
     }
