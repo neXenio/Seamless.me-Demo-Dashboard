@@ -105,14 +105,12 @@ class DataRecordingContainer {
     let firstData = data[0];
     if (firstData.hasOwnProperty('value')) {
       return 1;
-    } else {
-      const firstValue = firstData.values[0];
-      if (firstValue instanceof Array) {
-        return firstData.values.length * firstValue.length;
-      } else {
-        return firstData.values.length;
-      }
     }
+    let firstValue = firstData.values[0];
+    if (firstValue instanceof Array) {
+      return firstData.values.length * firstValue.length;
+    }
+    return firstData.values.length;
   }
 
   trim() {
