@@ -26,15 +26,17 @@ const Device = (props) => {
             key={device.id} />)}
       </Select>
 
-      <Select id="dataIdSelect" onChange={props.handleDataChange}>
-        <option disabled defaultValue>
-          Select a data type
+      {props.showDataIdSelect &&
+        <Select id="dataIdSelect" onChange={props.handleDataChange}>
+          <option disabled defaultValue>
+            Gravity Sensor
           </option>
-        {props.dataList.map(data =>
-          <Option deviceID={data.id}
-            deviceName={data.optionText}
-            key={data.id} />)}
-      </Select>
+          {props.dataList.map(data =>
+            <Option deviceID={data.id}
+              deviceName={data.optionText}
+              key={data.id} />)}
+        </Select>
+      }
     </Col>
   );
 }

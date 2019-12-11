@@ -36,6 +36,7 @@ function App() {
   const [dataList, updateDataList] = useState([]);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
+  const [showDataIdSelect, updateShowDataIdSelect] = useState(false);
 
 
   useEffect(() => {
@@ -166,6 +167,7 @@ function App() {
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
+    updateShowDataIdSelect(true);
   }, [connectedDevices, setupSocket]);
 
   const handleDataChange = useCallback((event) => {
@@ -210,7 +212,7 @@ function App() {
                 waves="light"
               />}
           >
-            <Device deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
+            <Device showDataIdSelect={showDataIdSelect} deviceList={connectedDevices} dataList={dataList} handleDeviceChange={handleDeviceChange} handleDataChange={handleDataChange} />
           </Modal>
         </Col>
         <Row>
