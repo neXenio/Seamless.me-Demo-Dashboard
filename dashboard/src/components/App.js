@@ -67,8 +67,8 @@ function App() {
           message = JSON.parse(message);
         }
 
-        let key = message.key;
-        let data = message.data;
+        const key = message.key;
+        const data = message.data;
 
         switch (key) {
           case MESSAGE_INITIALIZE_DEVICE:
@@ -97,7 +97,7 @@ function App() {
   }
 
   function processDataRecordingContainer(partialDataRecordingContainer) {
-    if (typeof selectedDevice === 'undefined' || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
+    if (typeof selectedDevice === undefined || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
       // console.log('Not processing data recording container from: ' + partialDataRecordingContainer.deviceInfo.id);
       return;
     }
@@ -151,14 +151,14 @@ function App() {
 
     // append available IDs as options
     ids.forEach(id => {
-      let optionText = DataRecordingContainer.getReadableId(id);
+      const optionText = DataRecordingContainer.getReadableId(id);
 
-      updateDataList((oldDataList) => {
-        return [...oldDataList, {
+      updateDataList(oldDataList =>
+        oldDataList.concat({
           id,
-          optionText
-        }];
-      });
+          optionText,
+        })
+      );
     });
   }
 

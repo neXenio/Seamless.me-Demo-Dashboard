@@ -44,7 +44,7 @@ class DataRecordingContainer {
   }
 
   getDataValuesInDimension(id, dimension) {
-    let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
+    const maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
     return this.getData(id)
       .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
       .map(data => {
@@ -83,12 +83,10 @@ class DataRecordingContainer {
   }
 
   getDataTimestamps(id) {
-    let timestamps = [];
     let maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
-    this.getData(id)
+    return this.getData(id)
       .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
-      .forEach(data => timestamps.push(data.aggregationTimestamp));
-    return timestamps;
+      .map(data => data.aggregationTimestamp);
   }
 
   getDataTimestampsForComparison(id, startTimestamp, endTimestamp) {
@@ -100,7 +98,7 @@ class DataRecordingContainer {
   }
 
   getDimensions(id) {
-    let data = this.getData(id);
+    const data = this.getData(id);
     if (data.length === 0) {
       return 0;
     }
@@ -108,7 +106,7 @@ class DataRecordingContainer {
     if (firstData.hasOwnProperty('value')) {
       return 1;
     } else {
-      let firstValue = firstData.values[0];
+      const firstValue = firstData.values[0];
       if (firstValue instanceof Array) {
         return firstData.values.length * firstValue.length;
       } else {
