@@ -93,14 +93,14 @@ const Visualization = (props) => {
     let layout = createChartPlotLayout(dimensions, 1);
 
     if (recreateSecondChartPlot.current === true) {
-      Plotly.newPlot('second-chart-plot-container', traces, layout);
+      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
       recreateSecondChartPlot.current = false;
     }
     if (recreateThirdChartPlot.current === true) {
-      Plotly.newPlot('third-chart-plot-container', traces, layout);
+      Plotly.newPlot('third-chart-plot-container', traces, layout, { responsive: true });
       recreateThirdChartPlot.current = false;
     } else {
-      Plotly.newPlot('chart-plot-container', traces, layout);
+      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
       recreateChartPlot.current = false;
     }
   }
