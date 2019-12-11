@@ -117,7 +117,7 @@ class DataRecordingContainer {
 
   trim() {
     let minimumAggregationTimestamp = Date.now() - MAXIMUM_DATA_AGE - timestampOffset;
-    this.getIds().forEach(function (id) {
+    this.getIds().forEach((id) => {
       let trimmedData = this.getData(id);
 
       // trim based on count

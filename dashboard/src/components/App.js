@@ -107,7 +107,7 @@ function App() {
 
     // updateStatusText('Processing partial data recording with ' + delay + 'ms delay');
 
-    partialDataRecordingContainer.recordings.forEach(function (dataRecording) {
+    partialDataRecordingContainer.recordings.forEach((dataRecording) => {
       if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
         onDataWithNewIdReceived(dataRecording.dataId);
       }
