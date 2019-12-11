@@ -340,13 +340,13 @@ const Visualization = (props) => {
       </Col>
 
       <Col m={12} s={12} l={8} offset="s0, m0, l2">
-        <Button waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
+        <Button className="red" waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
           Start recording
           </Button>
-        <Button waves="light" style={{ marginRight: '50px' }} onClick={switchToSecondDataVisualisation}>
+        <Button className="red" waves="light" style={{ marginRight: '50px' }} onClick={switchToSecondDataVisualisation}>
           Switch
           </Button>
-        <Button waves="light" style={{ marginRight: '50px' }} onClick={stopThirdDataVisualisation}>
+        <Button className="red" waves="light" style={{ marginRight: '50px' }} onClick={stopThirdDataVisualisation}>
           Stop recording
           </Button>
       </Col>

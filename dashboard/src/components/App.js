@@ -203,7 +203,7 @@ function App() {
             trigger={
               <Button
                 node="button"
-                className="green"
+                className="orange"
                 floating
                 icon={<Icon>dehaze</Icon>}
                 large

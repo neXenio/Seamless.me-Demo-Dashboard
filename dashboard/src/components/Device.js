@@ -13,7 +13,7 @@ const Device = (props) => {
 
   return (
     <Col m={6} s={12} l={8} offset="s0, m0, l2">
-      <Card textClassName="dark-text" title="Select a Devices">
+      <Card textClassName="dark-text" title="Select a Device">
         Select a device and the type of data you want to visualize.
         <br />
         <Select id="deviceIdSelect" onChange={props.handleDeviceChange}>
