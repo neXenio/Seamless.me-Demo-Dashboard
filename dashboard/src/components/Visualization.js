@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import createPlotlyComponent from 'react-plotly.js/factory'
+// import createPlotlyComponent from 'react-plotly.js/factory'
 import Plotly from 'plotly.js';
 import { Col, Button, Card } from 'react-materialize';
 
@@ -9,7 +9,7 @@ const CHART_PLOT_DURATION = 30 * 1000;
 const COMPARISON_CHART_PLOT_DURATION = 15 * 1000;
 const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
-const Plot = createPlotlyComponent(Plotly);
+// const Plot = createPlotlyComponent(Plotly);
 
 const Visualization = (props) => {
   // eslint-disable-next-line
