@@ -3,7 +3,7 @@
  * Read more on GitHub: https://github.com/neXenio/BAuth-Demo-Dashboard
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import io from 'socket.io-client';
 import { Row, Button, Icon, Modal, Col } from 'react-materialize';
 import M from "materialize-css";
@@ -43,8 +43,81 @@ function App() {
     // eslint-disable-next-line
   }, [])
 
+  // DEVICE + DATA INITIALIZATION
+  const onDeviceWithNewIdConnected = useCallback((device) => {
+    // update the connected devices array, place the new device first
+    updateConnectedDeviceList((oldConnectedDeviceList) => {
+
+      const connectionStatus = !oldConnectedDeviceList.some(oldDevice => oldDevice.id === device.id);
+
+      if (connectionStatus) {
+        M.toast({
+          html: device.name + ' connected'
+        });
+        return oldConnectedDeviceList.concat(device);
+      } else {
+        return oldConnectedDeviceList;
+      }
+    });
+  }, []);
+
+  const processDeviceInitialization = useCallback((device) => {
+    if (!connectedDevices.some(connectedDevice => connectedDevice.id === device.id)) {
+      console.log('Device initialization received: ' + JSON.stringify(device));
+      onDeviceWithNewIdConnected(device);
+    }
+  }, [connectedDevices, onDeviceWithNewIdConnected]);
+
+  const onDataWithNewIdReceived = useCallback((id) => {
+    // first recording of data with that ID
+    console.log('Received first recording of data with ID: ' + id);
+
+    let ids = dataRecordingContainer.getIds().sort();
+
+    updateDataList([]);
+
+    // append available IDs as options
+    ids.forEach(id => {
+      const optionText = DataRecordingContainer.getReadableId(id);
+
+      updateDataList(oldDataList =>
+        oldDataList.concat({
+          id,
+          optionText,
+        })
+      );
+    });
+  }, [dataRecordingContainer]);
+
+  const processDataRecordingContainer = useCallback((partialDataRecordingContainer) => {
+    if (typeof selectedDevice === undefined || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
+      // console.log('Not processing data recording container from: ' + partialDataRecordingContainer.deviceInfo.id);
+      return;
+    }
+
+    let delay = Date.now() - partialDataRecordingContainer.endTimestamp;
+    updateTimestampOffset((oldTimestampOffset) => {
+      if (Math.abs(oldTimestampOffset - delay) > DELAY_LIMIT) {
+        console.log("Updated timestamp offset to " + (delay - DELAY_LIMIT));
+        return delay - DELAY_LIMIT;
+      }
+      return oldTimestampOffset;
+    });
+
+
+    // updateStatusText('Processing partial data recording with ' + delay + 'ms delay');
+
+    partialDataRecordingContainer.recordings.forEach(function (dataRecording) {
+      if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
+        onDataWithNewIdReceived(dataRecording.dataId);
+      }
+      dataRecordingContainer.addDataRecording(dataRecording);
+    });
+    dataRecordingContainer.trim();
+  }, [dataRecordingContainer, onDataWithNewIdReceived]);
+
   // ESTABLISH CONNECTION
-  function setupSocket() {
+  const setupSocket = useCallback(() => {
 
     socket = io(BAUTH_DEMO_SERVER);
 
@@ -85,100 +158,20 @@ function App() {
         console.error(error);
       }
     });
-  }
+  }, [processDataRecordingContainer, processDeviceInitialization]);
 
-
-  // DEVICE + DATA INITIALIZATION
-  function processDeviceInitialization(device) {
-    if (!connectedDevices.some(connectedDevice => connectedDevice.id === device.id)) {
-      console.log('Device initialization received: ' + JSON.stringify(device));
-      onDeviceWithNewIdConnected(device);
-    }
-  }
-
-  function processDataRecordingContainer(partialDataRecordingContainer) {
-    if (typeof selectedDevice === undefined || partialDataRecordingContainer.deviceInfo.id !== selectedDevice.id) {
-      // console.log('Not processing data recording container from: ' + partialDataRecordingContainer.deviceInfo.id);
-      return;
-    }
-
-    let delay = Date.now() - partialDataRecordingContainer.endTimestamp;
-    updateTimestampOffset((oldTimestampOffset) => {
-      if (Math.abs(oldTimestampOffset - delay) > DELAY_LIMIT) {
-        console.log("Updated timestamp offset to " + (delay - DELAY_LIMIT));
-        return delay - DELAY_LIMIT;
-      }
-      return oldTimestampOffset;
-    });
-
-
-    // updateStatusText('Processing partial data recording with ' + delay + 'ms delay');
-
-    partialDataRecordingContainer.recordings.forEach(function (dataRecording) {
-      if (dataRecordingContainer.getData(dataRecording.dataId).length === 0) {
-        onDataWithNewIdReceived(dataRecording.dataId);
-      }
-      dataRecordingContainer.addDataRecording(dataRecording);
-    });
-    dataRecordingContainer.trim();
-  }
-
-  function onDeviceWithNewIdConnected(device) {
-
-    // update the connected devices array, place the new device first
-    updateConnectedDeviceList((oldConnectedDeviceList) => {
-
-      const connectionStatus = !oldConnectedDeviceList.some(oldDevice => oldDevice.id === device.id);
-
-      if (connectionStatus) {
-        M.toast({
-          html: device.name + ' connected'
-        });
-        return oldConnectedDeviceList.concat(device);
-      } else {
-        return oldConnectedDeviceList;
-      }
-    });
-  }
-
-  function onDataWithNewIdReceived(id) {
-    // first recording of data with that ID
-    console.log('Received first recording of data with ID: ' + id);
-
-    let ids = dataRecordingContainer.getIds().sort();
-
-    updateDataList([]);
-
-    // append available IDs as options
-    ids.forEach(id => {
-      const optionText = DataRecordingContainer.getReadableId(id);
-
-      updateDataList(oldDataList =>
-        oldDataList.concat({
-          id,
-          optionText,
-        })
-      );
-    });
-  }
-
-
-  // HANDLE SELECT-CHANGE
-  function handleDeviceChange(event) {
-
+  const handleDeviceChange = useCallback((event) => {
     setupSocket();
-
     let selectedDeviceId = event.target.value;
     selectedDevice = connectedDevices.find(connectedDevice => connectedDevice.id === selectedDeviceId);
     console.log('Selected device changed: ' + JSON.stringify(selectedDevice));
     updateDataRecordingContainer(new DataRecordingContainer());
-  }
+  }, [connectedDevices, setupSocket]);
 
-  function handleDataChange(event) {
-
+  const handleDataChange = useCallback((event) => {
     updateSelectedDataId(event.target.value);
     console.log('Selected data ID changed: ' + event.target.value);
-  }
+  }, [updateSelectedDataId]);
 
 
   return (

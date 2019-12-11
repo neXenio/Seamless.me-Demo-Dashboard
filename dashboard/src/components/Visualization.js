@@ -37,7 +37,7 @@ const Visualization = (props) => {
       return () => clearInterval(intervalID);
     },
     // eslint-disable-next-line 
-    [props.selectedDataId, props.timestampOffset /*, props.statusText */]
+    [props.selectedDataId, props.timestampOffset, /*props.statusText,*/ render, recreateChartPlot]
   )
 
 
