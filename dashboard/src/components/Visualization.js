@@ -323,21 +323,22 @@ const Visualization = (props) => {
     <div>
       <Col m={12} s={12} l={8} offset="s0, m0, l2">
         <Card>
-          <Plot
-            divId="chart-plot-container"
-          />
+          {/* <Plot divId="chart-plot-container" /> */}
+          <div id="chart-plot-container"></div>
         </Card>
       </Col>
 
       <Col m={6} s={12} l={4} offset="s0, m0, l2">
         <Card>
-          {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />}
+          {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
+          {showFirstWalkingPlot && <div id="second-chart-plot-container"></div>}
         </Card>
       </Col>
 
       <Col m={6} s={12} l={4} offset="s0, m0, l0">
         <Card>
-          {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />}
+          {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
+          {showSecondWalkingPlot && <div id="third-chart-plot-container"></div>}
         </Card>
       </Col>
 
