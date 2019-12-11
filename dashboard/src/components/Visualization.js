@@ -317,6 +317,7 @@ const Visualization = (props) => {
 
   return (
     <div>
+
       <Col m={12} s={12} l={8} offset="s0, m0, l2">
         <Card>
           {/* <Plot divId="chart-plot-container" /> */}
@@ -338,7 +339,7 @@ const Visualization = (props) => {
         </Card>
       </Col>
 
-      <Col m={12} s={12} l={8} offset="s0, m0, l5">
+      <Col m={12} s={12} l={8} offset="s0, m0, l2">
         <Button waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
           Start recording
           </Button>

@@ -205,7 +205,7 @@ function App() {
                 node="button"
                 className="green"
                 floating
-                icon={<Icon>add</Icon>}
+                icon={<Icon>dehaze</Icon>}
                 large
                 waves="light"
               />}
@@ -215,9 +215,6 @@ function App() {
         </Col>
         <Row>
           <Visualization dataRecordingContainer={dataRecordingContainer} selectedDataId={selectedDataId} timestampOffset={timestampOffset} /* statusText={statusText} */ />
-        </Row>
-        <Row>
-          {/* <Info /> */}
         </Row>
       </div>
     </div>
