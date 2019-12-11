@@ -178,7 +178,7 @@ function App() {
     <div className="section">
       <Logo />
       <div className="row">
-        <Col m={6} s={12} l={4} offset="s0, m0, l2">
+        <Col m={6} s={12} l={4} offset="s0, m0, l0">
           <Modal
             actions={[
               <Button flat modal="close" node="button" waves="green">Close</Button>
