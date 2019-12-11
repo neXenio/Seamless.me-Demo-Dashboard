@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 // import createPlotlyComponent from 'react-plotly.js/factory'
 import Plotly from 'plotly.js';
 import { Col, Button, Card } from 'react-materialize';
@@ -40,72 +40,12 @@ const Visualization = (props) => {
     [props.selectedDataId, props.timestampOffset, /*props.statusText,*/ render, recreateChartPlot]
   )
 
-
-
-  // CHART INITIALIZATION
-  function render() {
-    let renderingStartTimestamp = Date.now();
-
-    updateChartPlot();
-
-    if (recordFirstWalkingData.current === true) {
-      updateSecondChartPlot();
-    }
-
-    if (recordSecondWalkingData.current === true) {
-      updateThirdChartPlot();
-    }
-
-    let renderingDuration = Date.now() - renderingStartTimestamp;
-    if (renderingDuration > RENDERING_INTERVAL) {
-      // console.log('Rendering is too slow: ' + renderingDuration + 'ms');
-    }
-  }
-
-  function getChartMarkerColor(dimension) {
+  const getChartMarkerColor = useCallback((dimension) => {
     const colors = ['#82C9C2', '#5D77A7', '#FF66FF']
     return colors[dimension % colors.length]
-  }
+  }, []);
 
-  function createChartPlot(dimensions) {
-    console.log("chart created");
-    let traces = [];
-
-    // add properties for each dimension
-    for (let dimension = 1; dimension <= dimensions; dimension++) {
-      let color = getChartMarkerColor(dimension - 1);
-      let xAxis = 'x' + dimension;
-      let yAxis = 'y' + dimension;
-      let trace = {
-        x: [0],
-        y: [0],
-        xaxis: xAxis,
-        yaxis: yAxis,
-        type: 'scatter',
-        mode: 'lines',
-        marker: {
-          color: color,
-          size: 1
-        }
-      }
-      traces.push(trace);
-    }
-    let layout = createChartPlotLayout(dimensions, 1);
-
-    if (recreateSecondChartPlot.current === true) {
-      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
-      recreateSecondChartPlot.current = false;
-    }
-    if (recreateThirdChartPlot.current === true) {
-      Plotly.newPlot('third-chart-plot-container', traces, layout, { responsive: true });
-      recreateThirdChartPlot.current = false;
-    } else {
-      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
-      recreateChartPlot.current = false;
-    }
-  }
-
-  function createChartPlotLayout(dimensions, duration) {
+  const createChartPlotLayout = useCallback((dimensions, duration) => {
     let defaultXAxis = {
       showgrid: false,
       zeroline: false,
@@ -150,9 +90,47 @@ const Visualization = (props) => {
     }
 
     return layout;
-  }
+  }, []);
 
-  function updateChartPlot() {
+  const createChartPlot = useCallback((dimensions) => {
+    console.log("chart created");
+    let traces = [];
+
+    // add properties for each dimension
+    for (let dimension = 1; dimension <= dimensions; dimension++) {
+      let color = getChartMarkerColor(dimension - 1);
+      let xAxis = 'x' + dimension;
+      let yAxis = 'y' + dimension;
+      let trace = {
+        x: [0],
+        y: [0],
+        xaxis: xAxis,
+        yaxis: yAxis,
+        type: 'scatter',
+        mode: 'lines',
+        marker: {
+          color: color,
+          size: 1
+        }
+      }
+      traces.push(trace);
+    }
+    let layout = createChartPlotLayout(dimensions, 1);
+
+    if (recreateSecondChartPlot.current === true) {
+      Plotly.newPlot('second-chart-plot-container', traces, layout, { responsive: true });
+      recreateSecondChartPlot.current = false;
+    }
+    if (recreateThirdChartPlot.current === true) {
+      Plotly.newPlot('third-chart-plot-container', traces, layout, { responsive: true });
+      recreateThirdChartPlot.current = false;
+    } else {
+      Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
+      recreateChartPlot.current = false;
+    }
+  }, [createChartPlotLayout, getChartMarkerColor]);
+
+  const updateChartPlot = useCallback(() => {
     let data = dataRecordingContainerState.getData(props.selectedDataId);
     if (data.length === 0) {
       console.log('Not updating chart plot, no data available');
@@ -188,9 +166,9 @@ const Visualization = (props) => {
       Plotly.relayout('chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('chart-plot-container', dataUpdate)
     }
-  }
+  }, [createChartPlot, createChartPlotLayout, dataRecordingContainerState, props.selectedDataId, props.timestampOffset]);
 
-  function updateSecondChartPlot() {
+  const updateSecondChartPlot = useCallback(() => {
     let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
     var dataStartTimestamp;
@@ -239,9 +217,10 @@ const Visualization = (props) => {
       Plotly.relayout('second-chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('second-chart-plot-container', dataUpdate);
     }
-  }
+  }, [createChartPlot, createChartPlotLayout, dataRecordingContainerState, props.selectedDataId, props.timestampOffset]);
 
-  function updateThirdChartPlot() {
+
+  const updateThirdChartPlot = useCallback(() => {
     let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
 
     var dataStartTimestamp;
@@ -290,33 +269,52 @@ const Visualization = (props) => {
       Plotly.relayout('third-chart-plot-container', createChartPlotLayout(dimensions, duration));
       Plotly.restyle('third-chart-plot-container', dataUpdate);
     }
-  }
+  }, [createChartPlot, createChartPlotLayout, dataRecordingContainerState, props.selectedDataId, props.timestampOffset]);
+
+
+  // CHART INITIALIZATION
+  const render = useCallback(() => {
+    let renderingStartTimestamp = Date.now();
+
+    updateChartPlot();
+
+    if (recordFirstWalkingData.current === true) {
+      updateSecondChartPlot();
+    }
+
+    if (recordSecondWalkingData.current === true) {
+      updateThirdChartPlot();
+    }
+
+    let renderingDuration = Date.now() - renderingStartTimestamp;
+    if (renderingDuration > RENDERING_INTERVAL) {
+      // console.log('Rendering is too slow: ' + renderingDuration + 'ms');
+    }
+  }, [updateChartPlot, updateSecondChartPlot, updateThirdChartPlot]);
 
   // START & STOP OF SECOND PLOT
-  function startSecondDataVisualisation() {
+  const startSecondDataVisualisation = useCallback(() => {
     firstWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = true;
     recreateSecondChartPlot.current = true;
 
     updateShowFirstWalkingPlot(!showFirstWalkingPlot);
-  }
+  }, [props.timestampOffset, showFirstWalkingPlot]);
 
-  function switchToSecondDataVisualisation() {
+  const switchToSecondDataVisualisation = useCallback(() => {
     firstWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = false;
-
-
     // SECOND
     updateShowSecondWalkingPlot(!showSecondWalkingPlot);
     secondWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordSecondWalkingData.current = true;
     recreateThirdChartPlot.current = true;
-  }
+  }, [props.timestampOffset, showSecondWalkingPlot]);
 
-  function stopThirdDataVisualisation() {
+  const stopThirdDataVisualisation = useCallback(() => {
     secondWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordSecondWalkingData.current = false;
-  }
+  }, [props.timestampOffset]);
 
 
   return (
