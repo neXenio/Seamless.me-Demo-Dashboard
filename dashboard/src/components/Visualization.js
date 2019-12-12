@@ -318,28 +318,28 @@ const Visualization = (props) => {
   return (
     <div>
 
-      <Col m={12} s={12} offset="s0, m0, l0">
+      <Col s={12} m={12} offset="s0, m0, l0">
         <Card>
           {/* <Plot divId="chart-plot-container" /> */}
           <div id="chart-plot-container"></div>
         </Card>
       </Col>
 
-      <Col m={6} s={12} offset="s0, m0, l0">
+      <Col s={12} m={6} offset="s0, m0, l0">
         <Card>
           {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
           {showFirstWalkingPlot && <div id="second-chart-plot-container"></div>}
         </Card>
       </Col>
 
-      <Col m={6} s={12} offset="s0, m0, l0">
+      <Col s={12} m={6} offset="s0, m0, l0">
         <Card>
           {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
           {showSecondWalkingPlot && <div id="third-chart-plot-container"></div>}
         </Card>
       </Col>
 
-      <Col m={6} s={12} l={8} offset="s0, m0, l0">
+      <Col s={12} m={6} l={8} offset="s0, m0, l0">
         <Button className="red" waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
           Start recording
           </Button>
