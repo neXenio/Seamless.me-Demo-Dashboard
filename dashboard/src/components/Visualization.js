@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-// import createPlotlyComponent from 'react-plotly.js/factory'
+// import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js';
 import { Col, Button, Card } from 'react-materialize';
 
@@ -83,9 +83,7 @@ const Visualization = (props) => {
   }, []);
 
   const createChartPlot = useCallback((dimensions) => {
-    console.log("chart created");
     let traces = [];
-
     // add properties for each dimension
     for (let dimension = 1; dimension <= dimensions; dimension++) {
       let color = getChartMarkerColor(dimension - 1);
@@ -118,27 +116,29 @@ const Visualization = (props) => {
       Plotly.newPlot('chart-plot-container', traces, layout, { responsive: true });
       recreateChartPlot.current = false;
     }
+
+    console.log("chart created");
   }, [createChartPlotLayout, getChartMarkerColor]);
 
   const updateChartPlot = useCallback(() => {
     let data = dataRecordingContainerState.getData(props.selectedDataId);
+
     if (data.length === 0) {
-      console.log('Not updating chart plot, no data available');
+      console.log('Not updating main chart plot, no data available');
       return;
     }
 
     // var firstData = data[0];
     // var lastData = data[data.length - 1];
     let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
-
     let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
     let endTimestamp = Date.now() - MINIMUM_DATA_AGE - props.timestampOffset;
     let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
     let duration = endTimestamp - startTimestamp;
     let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
-
     let xValues = [];
     let yValues = [];
+
     for (let dimension = 0; dimension < dimensions; dimension++) {
       let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
       xValues.push(delays);
@@ -184,9 +184,9 @@ const Visualization = (props) => {
     let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
     let duration = chartEndTimestamp - chartStartTimestamp;
     let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
-
     let xValues = [];
     let yValues = [];
+
     for (let dimension = 0; dimension < dimensions; dimension++) {
       let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
       xValues.push(delays);
@@ -236,9 +236,9 @@ const Visualization = (props) => {
     let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
     let duration = chartEndTimestamp - chartStartTimestamp;
     let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
-
     let xValues = [];
     let yValues = [];
+
     for (let dimension = 0; dimension < dimensions; dimension++) {
       let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
       xValues.push(delays);
@@ -260,7 +260,6 @@ const Visualization = (props) => {
       Plotly.restyle('third-chart-plot-container', dataUpdate);
     }
   }, [createChartPlot, createChartPlotLayout, dataRecordingContainerState, props.selectedDataId, props.timestampOffset]);
-
 
   // CHART INITIALIZATION
   const render = useCallback(() => {
@@ -290,19 +289,17 @@ const Visualization = (props) => {
     // eslint-disable-next-line 
     [props.selectedDataId, props.timestampOffset, render, recreateChartPlot /*,props.statusText*/]);
 
-  // START & STOP OF SECOND PLOT
+  // START, SWITCH STOP OF COMPARISON PLOT
   const startSecondDataVisualisation = useCallback(() => {
     firstWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = true;
     recreateSecondChartPlot.current = true;
-
     updateShowFirstWalkingPlot(!showFirstWalkingPlot);
   }, [props.timestampOffset, showFirstWalkingPlot]);
 
   const switchToSecondDataVisualisation = useCallback(() => {
     firstWalkingEndTimestamp.current = Date.now() - props.timestampOffset;
     recordFirstWalkingData.current = false;
-    // SECOND
     updateShowSecondWalkingPlot(!showSecondWalkingPlot);
     secondWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
     recordSecondWalkingData.current = true;
@@ -314,10 +311,8 @@ const Visualization = (props) => {
     recordSecondWalkingData.current = false;
   }, [props.timestampOffset]);
 
-
   return (
     <div>
-
       <Col s={12} m={12} offset="s0, m0, l0">
         <Card>
           {/* <Plot divId="chart-plot-container" /> */}
@@ -352,10 +347,8 @@ const Visualization = (props) => {
       </Col>
 
       {/* <p id="statusText" className="center">{props.statusText}}</p> */}
-
     </div >
   );
 }
-
 
 export default Visualization;

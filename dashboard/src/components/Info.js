@@ -1,9 +1,7 @@
 import React from 'react';
 import { Row, Col, Card } from 'react-materialize';
 
-
 const Info = (props) => {
-
   return (
     <Row>
       <Col m={6} s={12} l={4} offset="s0, m0, l0">
@@ -22,6 +20,5 @@ const Info = (props) => {
     </Row>
   );
 }
-
 
 export default Info;

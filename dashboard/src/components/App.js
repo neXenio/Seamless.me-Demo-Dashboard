@@ -11,8 +11,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 import './App.css';
 
 // COMPONENTS
-import Logo from './Logo.js';
 // import Info from './Info.js';
+import Logo from './Logo.js';
 import Device from './Device.js';
 import Visualization from './Visualization.js';
 import DataRecordingContainer from './DataRecordingContainer.js';
@@ -29,28 +29,23 @@ let selectedDevice;
 
 
 function App() {
-
   // const [statusText, updateStatusText] = useState('');
+  const [dataList, updateDataList] = useState([]);
   const [timestampOffset, updateTimestampOffset] = useState(0);
   const [connectedDevices, updateConnectedDeviceList] = useState([]);
-  const [dataList, updateDataList] = useState([]);
+  const [showDataIdSelect, updateShowDataIdSelect] = useState(false);
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
-  const [showDataIdSelect, updateShowDataIdSelect] = useState(false);
-
 
   useEffect(() => {
     setupSocket();
     // eslint-disable-next-line
   }, [])
 
-  // DEVICE + DATA INITIALIZATION
   const onDeviceWithNewIdConnected = useCallback((device) => {
     // update the connected devices array, place the new device first
     updateConnectedDeviceList((oldConnectedDeviceList) => {
-
       const connectionStatus = !oldConnectedDeviceList.some(oldDevice => oldDevice.id === device.id);
-
       if (connectionStatus) {
         M.toast({
           html: device.name + ' connected'
@@ -71,16 +66,12 @@ function App() {
 
   const onDataWithNewIdReceived = useCallback((id) => {
     // first recording of data with that ID
-    console.log('Received first recording of data with ID: ' + id);
-
     let ids = dataRecordingContainer.getIds().sort();
-
+    console.log('Received first recording of data with ID: ' + id);
     updateDataList([]);
-
     // append available IDs as options
     ids.forEach(id => {
       const optionText = DataRecordingContainer.getReadableId(id);
-
       updateDataList(oldDataList =>
         oldDataList.concat({
           id,
@@ -105,7 +96,6 @@ function App() {
       return oldTimestampOffset;
     });
 
-
     // updateStatusText('Processing partial data recording with ' + delay + 'ms delay');
 
     partialDataRecordingContainer.recordings.forEach((dataRecording) => {
@@ -117,9 +107,8 @@ function App() {
     dataRecordingContainer.trim();
   }, [dataRecordingContainer, onDataWithNewIdReceived]);
 
-  // ESTABLISH CONNECTION
+  // ESTABLISH CONNECTION 
   const setupSocket = useCallback(() => {
-
     socket = io(BAUTH_DEMO_SERVER);
 
     socket.on('connect', function () {
@@ -175,7 +164,6 @@ function App() {
     console.log('Selected data ID changed: ' + event.target.value);
   }, [updateSelectedDataId]);
 
-
   return (
     <div className="section">
       <Logo />
@@ -222,7 +210,5 @@ function App() {
     </div>
   );
 }
-
-
 
 export default App;

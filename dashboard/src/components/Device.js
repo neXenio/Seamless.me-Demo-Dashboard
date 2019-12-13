@@ -10,7 +10,6 @@ const Option = (props) => {
 }
 
 const Device = (props) => {
-
   return (
     <Col m={6} s={12} l={8} offset="s0, m0, l2">
       <h2>Welcome</h2>
@@ -40,6 +39,5 @@ const Device = (props) => {
     </Col>
   );
 }
-
 
 export default Device;
