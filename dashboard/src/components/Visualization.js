@@ -6,7 +6,7 @@ import { Col, Button, Card } from 'react-materialize';
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
 const COMPARISON_CHART_PLOT_DURATION = 15 * 1000;
-const MINIMUM_DATA_AGE = 500;
+// const MINIMUM_DATA_AGE = 500;
 const RENDERING_INTERVAL = 50;
 // const Plot = createPlotlyComponent(Plotly);
 
@@ -142,7 +142,7 @@ const Visualization = (props) => {
       chartEndTimestamp = Date.now() - props.timestampOffset;
     }
 
-    let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
+    let chartStartTimestamp = chartEndTimestamp - CHART_PLOT_DURATION;
 
     if (mainWalkingEndTimestamp.current) {
       dataEndTimestamp = mainWalkingEndTimestamp.current;
