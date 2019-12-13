@@ -16,7 +16,7 @@ const Device = (props) => {
       Select a device and the type of data you want to visualize.
         <br />
       <Select id="deviceIdSelect" onChange={props.handleDeviceChange}>
-        <option disabled defaultValue>
+        <option defaultValue>
           Select a device
           </option>
         {props.deviceList.map(device =>
@@ -28,7 +28,7 @@ const Device = (props) => {
 
       {props.showDataIdSelect &&
         <Select id="dataIdSelect" onChange={props.handleDataChange}>
-          <option disabled defaultValue>
+          <option defaultValue>
             Gravity Sensor
           </option>
           {props.dataList.map(data =>
