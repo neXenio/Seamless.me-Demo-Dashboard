@@ -34,9 +34,12 @@ const Device = (props) => {
             <Option deviceID={data.id}
               deviceName={data.optionText}
               key={data.id} />)}
-        </Select>
-      }
-    </Col>
+        </Select>}
+      <br />
+      <br />
+      <br />
+      <br />
+    </Col >
   );
 }
 
