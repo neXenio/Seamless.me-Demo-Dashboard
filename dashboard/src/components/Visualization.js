@@ -351,7 +351,7 @@ const Visualization = (props) => {
           </Button>
       </Col>
 
-      <MediaQuery minHeight={768} maxHeight={1049}>
+      <MediaQuery minHeight={568} maxHeight={1024}>
         <Col s={12} m={12} l={12}>
           <Card>
             {/* <Plot divId="chart-plot-container" /> */}
@@ -363,7 +363,7 @@ const Visualization = (props) => {
         <Col s={12} m={12} l={12}>
           <Card>
             {/* <Plot divId="chart-plot-container" /> */}
-            <div style={{ height: 1200 }} id="chart-plot-container"></div>
+            <div style={{ height: 1000 }} id="chart-plot-container"></div>
           </Card>
         </Col>
       </MediaQuery>
