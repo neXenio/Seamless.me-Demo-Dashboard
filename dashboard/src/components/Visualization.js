@@ -333,10 +333,6 @@ const Visualization = (props) => {
     recordSecondWalkingData.current = false;
   }, [props.timestampOffset]);
 
-  const comparisonDivStyle = {
-    height: 200
-  };
-
   return (
     <div>
       <Col s={6} m={6} l={6}>
