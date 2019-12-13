@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import MediaQuery from 'react-responsive';
 // import createPlotlyComponent from 'react-plotly.js/factory';
 import Plotly from 'plotly.js';
 import { Col, Button, Card } from 'react-materialize';
@@ -338,7 +339,7 @@ const Visualization = (props) => {
 
   return (
     <div>
-      <Col s={12} m={6} l={8} lx={8} offset="s0, m0, l0">
+      <Col s={6} m={6} l={6}>
         <Button className="red" waves="light" style={{ marginRight: '50px' }} onClick={startSecondDataVisualisation}>
           Start recording
           </Button>
@@ -350,26 +351,64 @@ const Visualization = (props) => {
           </Button>
       </Col>
 
-      <Col s={12} m={12} l={12} lx={12} offset="s0, m0, l0">
-        <Card>
-          {/* <Plot divId="chart-plot-container" /> */}
-          <div style={{ height: 300 }} id="chart-plot-container"></div>
-        </Card>
-      </Col>
+      <MediaQuery minHeight={768} maxHeight={1049}>
+        <Col s={12} m={12} l={12}>
+          <Card>
+            {/* <Plot divId="chart-plot-container" /> */}
+            <div style={{ height: 600 }} id="chart-plot-container"></div>
+          </Card>
+        </Col>
+      </MediaQuery>
+      <MediaQuery minHeight={1049} maxHeight={2558}>
+        <Col s={12} m={12} l={12}>
+          <Card>
+            {/* <Plot divId="chart-plot-container" /> */}
+            <div style={{ height: 1200 }} id="chart-plot-container"></div>
+          </Card>
+        </Col>
+      </MediaQuery>
+      <MediaQuery minHeight={2558}>
+        <Col s={12} m={12} l={12}>
+          <Card>
+            {/* <Plot divId="chart-plot-container" /> */}
+            <div style={{ height: 2500 }} id="chart-plot-container"></div>
+          </Card>
+        </Col>
+      </MediaQuery>
 
-      <Col s={12} m={6} l={6} lx={6} offset="s0, m0, l0">
-        <Card>
-          {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
-          {showFirstWalkingPlot && <div style={comparisonDivStyle} id="second-chart-plot-container"></div>}
-        </Card>
-      </Col>
+      <MediaQuery minHeight={1049} maxHeight={2558}>
+        <Col s={6} m={6} l={6}>
+          <Card>
+            {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
+            {showFirstWalkingPlot && <div style={{ height: 450 }} id="second-chart-plot-container"></div>}
+          </Card>
+        </Col>
+      </MediaQuery>
+      <MediaQuery minHeight={2558}>
+        <Col s={6} m={6} l={6}>
+          <Card>
+            {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
+            {showFirstWalkingPlot && <div style={{ height: 1500 }} id="second-chart-plot-container"></div>}
+          </Card>
+        </Col>
+      </MediaQuery>
 
-      <Col s={12} m={6} l={6} lx={6} offset="s0, m0, l0">
-        <Card>
-          {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
-          {showSecondWalkingPlot && <div style={comparisonDivStyle} id="third-chart-plot-container"></div>}
-        </Card>
-      </Col>
+      <MediaQuery minHeight={1049} maxHeight={2558}>
+        <Col s={6} m={6} l={6}>
+          <Card>
+            {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
+            {showSecondWalkingPlot && <div style={{ height: 450 }} id="third-chart-plot-container"></div>}
+          </Card>
+        </Col>
+      </MediaQuery>
+      <MediaQuery minHeight={2558}>
+        <Col s={6} m={6} l={6}>
+          <Card>
+            {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
+            {showSecondWalkingPlot && <div style={{ height: 1500 }} id="third-chart-plot-container"></div>}
+          </Card>
+        </Col>
+      </MediaQuery>
 
       {/* <p id="statusText" className="center">{props.statusText}}</p> */}
     </div >
