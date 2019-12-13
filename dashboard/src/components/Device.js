@@ -22,7 +22,8 @@ const Device = (props) => {
         {props.deviceList.map(device =>
           <Option deviceID={device.id}
             deviceName={device.name}
-            key={device.id} />)}
+            key={device.id}
+          />)}
       </Select>
 
       {props.showDataIdSelect &&
@@ -33,7 +34,8 @@ const Device = (props) => {
           {props.dataList.map(data =>
             <Option deviceID={data.id}
               deviceName={data.optionText}
-              key={data.id} />)}
+              key={data.id}
+            />)}
         </Select>}
       <br />
       <br />
