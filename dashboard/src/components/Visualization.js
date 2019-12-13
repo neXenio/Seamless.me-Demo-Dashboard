@@ -308,6 +308,10 @@ const Visualization = (props) => {
     recordSecondWalkingData.current = false;
   }, [props.timestampOffset]);
 
+  const comparisonDivStyle = {
+    height: 200
+  };
+
   return (
     <div>
       <Col s={12} m={6} l={8} lx={8} offset="s0, m0, l0">
@@ -332,14 +336,14 @@ const Visualization = (props) => {
       <Col s={12} m={6} l={6} lx={6} offset="s0, m0, l0">
         <Card>
           {/* {showFirstWalkingPlot && <Plot divId="second-chart-plot-container" />} */}
-          {showFirstWalkingPlot && <div style={{ height: 200 }} id="second-chart-plot-container"></div>}
+          {showFirstWalkingPlot && <div style={comparisonDivStyle} id="second-chart-plot-container"></div>}
         </Card>
       </Col>
 
       <Col s={12} m={6} l={6} lx={6} offset="s0, m0, l0">
         <Card>
           {/* {showSecondWalkingPlot && <Plot divId="third-chart-plot-container" />} */}
-          {showSecondWalkingPlot && <div style={{ height: 200 }} id="third-chart-plot-container"></div>}
+          {showSecondWalkingPlot && <div style={comparisonDivStyle} id="third-chart-plot-container"></div>}
         </Card>
       </Col>
 
