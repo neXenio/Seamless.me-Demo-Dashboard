@@ -43,27 +43,7 @@ class DataRecordingContainer {
     this.addData(dataRecording.dataId, dataRecording.dataList);
   }
 
-  getDataValuesInDimension(id, dimension) {
-    const maximumAggregationTimestamp = Date.now() - MINIMUM_DATA_AGE - timestampOffset;
-    return this.getData(id)
-      .filter(data => data.aggregationTimestamp < maximumAggregationTimestamp)
-      .map(data => {
-        let value;
-        if (data.hasOwnProperty('value')) {
-          value = data.value;
-        } else {
-          const firstValue = data.values[0];
-          if (firstValue instanceof Array) {
-            value = firstValue[dimension];
-          } else {
-            value = data.values[dimension];
-          }
-        }
-        return value;
-      });
-  }
-
-  getDataValuesInDimensionForComparison(id, dimension, startTimestamp, endTimestamp) {
+  getDataValuesInDimension(id, dimension, startTimestamp, endTimestamp) {
     return this.getData(id)
       .filter(data => data.aggregationTimestamp > startTimestamp && data.aggregationTimestamp < endTimestamp)
       .map(data => {

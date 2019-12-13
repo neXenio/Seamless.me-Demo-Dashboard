@@ -23,6 +23,9 @@ const Visualization = (props) => {
   const recordFirstWalkingData = useRef(false);
   const recordSecondWalkingData = useRef(false);
 
+  const mainWalkingStartTimestamp = useRef();
+  const mainWalkingEndTimestamp = useRef();
+
   const firstWalkingStartTimestamp = useRef();
   const firstWalkingEndTimestamp = useRef();
 
@@ -127,19 +130,36 @@ const Visualization = (props) => {
       return;
     }
 
-    // var firstData = data[0];
-    // var lastData = data[data.length - 1];
     let dimensions = dataRecordingContainerState.getDimensions(props.selectedDataId);
-    let timestamps = dataRecordingContainerState.getDataTimestamps(props.selectedDataId);
-    let endTimestamp = Date.now() - MINIMUM_DATA_AGE - props.timestampOffset;
-    let startTimestamp = endTimestamp - CHART_PLOT_DURATION;
-    let duration = endTimestamp - startTimestamp;
-    let delays = timestamps.map(timestamp => (timestamp - endTimestamp));
+
+    var dataStartTimestamp;
+    var dataEndTimestamp;
+    var chartEndTimestamp;
+
+    if (mainWalkingEndTimestamp.current) {
+      chartEndTimestamp = mainWalkingEndTimestamp.current;
+    } else {
+      chartEndTimestamp = Date.now() - props.timestampOffset;
+    }
+
+    let chartStartTimestamp = chartEndTimestamp - COMPARISON_CHART_PLOT_DURATION;
+
+    if (mainWalkingEndTimestamp.current) {
+      dataEndTimestamp = mainWalkingEndTimestamp.current;
+    } else {
+      dataEndTimestamp = chartEndTimestamp;
+    }
+
+    dataStartTimestamp = Math.max(mainWalkingStartTimestamp.current, chartStartTimestamp);
+
+    let timestamps = dataRecordingContainerState.getDataTimestampsForComparison(props.selectedDataId, dataStartTimestamp, dataEndTimestamp);
+    let duration = chartEndTimestamp - chartStartTimestamp;
+    let delays = timestamps.map(timestamp => (timestamp - chartEndTimestamp));
     let xValues = [];
     let yValues = [];
 
     for (let dimension = 0; dimension < dimensions; dimension++) {
-      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension);
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
       xValues.push(delays);
       yValues.push(valuesInDimenion);
     }
@@ -148,6 +168,9 @@ const Visualization = (props) => {
       x: xValues,
       y: yValues
     }
+
+    // console.log("Start-Main-Plot: " + mainWalkingStartTimestamp.current);
+    // console.log("End-Main-Plot: " + mainWalkingEndTimestamp.current);
 
     if (recreateChartPlot.current === true) {
       createChartPlot(dimensions);
@@ -187,7 +210,7 @@ const Visualization = (props) => {
     let yValues = [];
 
     for (let dimension = 0; dimension < dimensions; dimension++) {
-      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
       xValues.push(delays);
       yValues.push(valuesInDimenion);
     }
@@ -239,7 +262,7 @@ const Visualization = (props) => {
     let yValues = [];
 
     for (let dimension = 0; dimension < dimensions; dimension++) {
-      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimensionForComparison(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
+      let valuesInDimenion = dataRecordingContainerState.getDataValuesInDimension(props.selectedDataId, dimension, dataStartTimestamp, dataEndTimestamp);
       xValues.push(delays);
       yValues.push(valuesInDimenion);
     }
@@ -282,6 +305,7 @@ const Visualization = (props) => {
 
   useEffect(
     () => {
+      mainWalkingStartTimestamp.current = Date.now() - props.timestampOffset;
       const intervalID = window.setInterval(render, RENDERING_INTERVAL);
       return () => clearInterval(intervalID);
     }, [props.selectedDataId, props.timestampOffset, render, recreateChartPlot /*,props.statusText*/]);
