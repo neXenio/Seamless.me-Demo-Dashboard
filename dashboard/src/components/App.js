@@ -27,7 +27,6 @@ const DELAY_LIMIT = 1000;
 let socket;
 let selectedDevice;
 
-
 function App() {
   // const [statusText, updateStatusText] = useState('');
   const [dataList, updateDataList] = useState([]);
