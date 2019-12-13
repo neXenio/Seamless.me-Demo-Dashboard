@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Plotly from 'plotly.js';
 import { Col, Button, Card } from 'react-materialize';
 
-
 // CHART
 const CHART_PLOT_DURATION = 30 * 1000;
 const COMPARISON_CHART_PLOT_DURATION = 15 * 1000;
@@ -285,9 +284,7 @@ const Visualization = (props) => {
     () => {
       const intervalID = window.setInterval(render, RENDERING_INTERVAL);
       return () => clearInterval(intervalID);
-    },
-    // eslint-disable-next-line 
-    [props.selectedDataId, props.timestampOffset, render, recreateChartPlot /*,props.statusText*/]);
+    }, [props.selectedDataId, props.timestampOffset, render, recreateChartPlot /*,props.statusText*/]);
 
   // START, SWITCH STOP OF COMPARISON PLOT
   const startSecondDataVisualisation = useCallback(() => {

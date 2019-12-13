@@ -37,11 +37,6 @@ function App() {
   const [dataRecordingContainer, updateDataRecordingContainer] = useState(new DataRecordingContainer());
   const [selectedDataId, updateSelectedDataId] = useState('com.nexenio.behaviourauthentication.core.internal.behaviour.data.sensor.data.GravitySensorData');
 
-  useEffect(() => {
-    setupSocket();
-    // eslint-disable-next-line
-  }, [])
-
   const onDeviceWithNewIdConnected = useCallback((device) => {
     // update the connected devices array, place the new device first
     updateConnectedDeviceList((oldConnectedDeviceList) => {
@@ -149,6 +144,10 @@ function App() {
       }
     });
   }, [processDataRecordingContainer, processDeviceInitialization]);
+
+  useEffect(() => {
+    setupSocket();
+  }, [setupSocket])
 
   const handleDeviceChange = useCallback((event) => {
     setupSocket();
