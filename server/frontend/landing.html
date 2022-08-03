@@ -1,0 +1,96 @@
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style src="landing.css"></style>
+    <script src="landing.js"></script>
+  </head>
+  
+  <main>
+    <container>
+    
+      <div class="section">
+        
+        <div class="row">
+          <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l2 left-align">
+            <img class="header-logo" src="https://uploads-ssl.webflow.com/5d6fe8bf5db14443465e7157/5d6ff570be2eaddc51b71c28_White.svg"/>
+          </div>
+          <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l0 right-align">
+            <img class="header-logo" src="https://uploads-ssl.webflow.com/5d6fe8bf5db14443465e7157/5d6ffa32ea5148650e2bbb64_light%4032x-p-2600.png"/>
+          </div>
+        </div>
+        
+        <div class="row">
+  
+          <!-- Visualization -->
+          <div class="col s12 m12 l8 offset-s0 offset-m0 offset-l2">
+            <ul class="collapsible expandable">
+              <li class="active">
+                <div class="collapsible-header"><i class="material-icons">show_chart</i>Multiple Charts</div>
+                <div class="collapsible-body">
+                  <div id="chart-plot-container"></div>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">scatter_plot</i>Stacked Chart</div>
+                <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+              </li>
+              <li>
+                <div class="collapsible-header"><i class="material-icons">info</i>Meta Data</div>
+                <div class="collapsible-body">
+                  <p id="statusText" class="center">Status</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+  
+          <!-- Device -->
+          <div id="deviceCardContainer" class="col s12 m6 l4 offset-s0 offset-m0 offset-l2">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title truncate">Data Source</span>
+                <p>Select a device and the type of data you want to visualize.</p>
+                <br/>
+                <div class="input-field">
+                  <select id="deviceIdSelect">
+                    <option value="" disabled selected>Select a device</option>
+                  </select>
+                  <label>Device</label>
+                </div>
+                <br/>
+                <div class="input-field">
+                  <select id="dataIdSelect">
+                    <option value="" disabled selected>Select a data type</option>
+                  </select>
+                  <label>Data</label>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- About -->
+          <div id="aboutCardContainer" class="col s12 m6 l4 offset-s0 offset-m0 offset-l0">
+            <div class="card">
+              <div class="card-content">
+                <span class="card-title truncate">Seamless.me Demo</span>
+                <p>
+                  This is a simple tool to visualize data aggregated by the Seamless.me app in real-time.
+                </p>
+                <br/>
+                <p>
+                  Keep in mind that only demo builds of the Seamless.me app can be configured to stream data to the demo server.
+                </p>
+              </div>
+              <div class="card-action">
+                <a href="https://github.com/neXenio/BAuth-Demo-Dashboard" target="_blank" class="indigo-text">GitHub Repo</a>
+                <a href="https://jsfiddle.net/Steppschuh/3t12nd50/embedded/result" target="_blank" class="indigo-text">Trust Level Fork</a>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+  
+      </div>
+      
+    </container>
+  
+  </main>
+  
