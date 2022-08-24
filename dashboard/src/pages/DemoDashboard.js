@@ -114,6 +114,16 @@ export const DemoDashboard = () => {
                   <div class="col">User A Chart</div>
                   <div class="col right">
                     <button
+                      class="btn btn-small waves-effect waves-light red"
+                      type="button"
+                      // eslint-disable-next-line no-undef
+                      onClick={() => reset("userAChart")}
+                    >
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </div>
+                  <div class="col right">
+                    <button
                       class="btn btn-small waves-effect waves-light"
                       type="button"
                       // eslint-disable-next-line no-undef
@@ -140,6 +150,16 @@ export const DemoDashboard = () => {
 
                   <div class="col">User B Chart</div>
 
+                  <div class="col right">
+                    <button
+                      class="btn btn-small waves-effect waves-light red"
+                      type="button"
+                      // eslint-disable-next-line no-undef
+                      onClick={() => reset("userBChart")}
+                    >
+                      <i class="material-icons">delete</i>
+                    </button>
+                  </div>
                   <div class="col right">
                     <button
                       class="btn btn-small waves-effect waves-light"

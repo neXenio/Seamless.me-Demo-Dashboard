@@ -45,6 +45,10 @@ function initialize() {
   preselectedDeviceId = localStorage.preselectedDeviceId || preselectedDeviceId;
   preselectedDataId = localStorage.preselectedDataId || preselectedDataId;
 
+  const dimensions = dataRecordingContainer.getDimensions(selectedDataId);
+  createChartPlot("userAChart", dimensions);
+  createChartPlot("userBChart", dimensions);
+
   console.log("Pre-selected Device ID: " + preselectedDeviceId);
   console.log("Pre-selected Data ID: " + preselectedDataId);
 }
@@ -503,21 +507,6 @@ function changeUser(chartPlotContainer) {
 
   createChartPlot(chartPlotContainer, dimensions);
   updateChartPlot(chartPlotContainer);
-
-  // Plotly.toImage(CHART_PLOT_CONTAINER, {
-  //   format: "png",
-  //   width: chartContainer.offsetWidth,
-  //   height: 600,
-  // }).then(function (dataUrl) {
-  //   let img = new Image();
-  //   img.src = dataUrl;
-
-  //   resetScreenshot();
-  //   const imgContainer = document.getElementById(STACKED_CONTAINER);
-  //   imgContainer.appendChild(img);
-
-  //   // dataRecordingContainer = new DataRecordingContainer();
-  // });
 }
 
 function toggleRendering() {
@@ -531,13 +520,11 @@ function toggleRendering() {
     return;
   }
 
-  // dataRecordingContainer = new DataRecordingContainer();
   startInterval();
   btn.innerHTML = "Pause";
 }
 
 function resetChart() {
-  console.log(selectedDataId);
   dataRecordingContainer.resetRecordings();
 }
 
@@ -546,9 +533,8 @@ function resetScreenshot() {
   imgContainer.innerHTML = "";
 }
 
-function reset() {
-  resetChart();
-  resetScreenshot();
+function reset(graphDiv) {
+  Plotly.deleteTraces(graphDiv, [0, 1, 2]);
 }
 
 function startInterval() {
