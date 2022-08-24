@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  seamless.me:
+    build:
+      context: .
+    ports:
+      - "3080:3080"
+    container_name: seamless.me
+    stdin_open: true
+    volumes:
+       - ./:/usr/src/apps
+       - /usr/src/app/node_modules
