@@ -1,21 +1,24 @@
 // import "../helper/seamles-dashboard";
 import { useTitle } from "../hooks/useTitle";
-import nexenioLogoSrc from "../svg/nexenio-logo.svg";
+import nexenioLogoSrc from "../svg/nexenio-logo-black.svg";
 import seamlessLogoSrc from "../svg/seamlessme-logo.svg";
+import "./styles.css";
 
 export const DemoDashboard = () => {
   useTitle("SeamlessMe - Demo Dashboard");
 
   return (
     <main class="grey lighten-4">
-      <div class="row grey darken-3">
-        <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l2 left-align">
-          <img alt="powered by neXenio" src={seamlessLogoSrc} height="60" />
+      <header class=" grey lighten-3 z-depth-1 header">
+        <div class="row">
+          <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l2 left-align">
+            <img alt="powered by neXenio" src={seamlessLogoSrc} height="60" />
+          </div>
+          <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l0 right-align">
+            <img alt="powered by neXenio" src={nexenioLogoSrc} height="60" />
+          </div>
         </div>
-        <div class="col s6 m6 l4 offset-s0 offset-m0 offset-l0 right-align">
-          <img alt="powered by neXenio" src={nexenioLogoSrc} height="60" />
-        </div>
-      </div>
+      </header>
 
       {/* Header */}
       <div class="row">
