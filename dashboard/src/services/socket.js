@@ -18,7 +18,7 @@ export const IoProvider = ({ children }) => {
 
 export async function setupSocket() {
   socket.on("connect", function () {
-    console.log("Connected to the Demo Server");
+    // console.log("Connected to the Demo Server");
     //   M.toast({
     //     html: 'Connected to the Demo Server'
     //   });
@@ -30,7 +30,7 @@ export async function setupSocket() {
     });
   });
 
-  console.log(socket);
+  // console.log(socket);
 
   socket.on("message", function (message) {
     try {
@@ -43,7 +43,7 @@ export async function setupSocket() {
 
       switch (key) {
         case MESSAGE_INITIALIZE_DEVICE:
-          console.log(data);
+          // console.log(data);
           // processDeviceInitialization(data);
           break;
         case MESSAGE_DATA_RECORDING:
@@ -54,7 +54,7 @@ export async function setupSocket() {
           break;
       }
     } catch (error) {
-      console.log("Unable to handle message:\n" + JSON.stringify(message));
+      // console.log("Unable to handle message:\n" + JSON.stringify(message));
       console.error(error);
     }
   });

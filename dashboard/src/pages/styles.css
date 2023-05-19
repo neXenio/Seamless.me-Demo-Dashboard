@@ -1,3 +1,46 @@
 .header {
   padding-top: 8px;
 }
+
+body {
+  margin: 0px;
+}
+
+#door-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.door {
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 50%;
+  height: 100vh;
+  float: left;
+  position: absolute;
+  z-index: 2;
+  transition: all 1s ease-in-out;
+}
+
+#door-left {
+  background-image: url("https://i.imgur.com/MYw3DvA.png");
+  background-position: right;
+}
+
+#door-right {
+  background-image: url("https://i.imgur.com/JHCePyJ.png");
+  background-position: left;
+  right: 0;
+}
+
+#door-background {
+  background-image: url("https://i.imgur.com/hI689Zm.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}

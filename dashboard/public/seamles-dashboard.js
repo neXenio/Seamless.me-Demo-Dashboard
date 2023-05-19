@@ -38,6 +38,7 @@ var renderInterval;
 // called on page load
 function initialize() {
   dataRecordingContainer = new DataRecordingContainer();
+  window.bauthData = dataRecordingContainer;
   connectedDevices = [];
   setupForms();
   setupSocket();
@@ -82,7 +83,7 @@ function setupSocket() {
   socket = io(BAUTH_DEMO_SERVER);
 
   socket.on("connect", function () {
-    console.log("Connected to the Demo Server");
+    // console.log("Connected to the Demo Server");
     M.toast({
       html: "Connected to the Demo Server",
       displayLength: 2000,
